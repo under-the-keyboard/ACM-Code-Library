@@ -1,13 +1,11 @@
 syntax on
 set nu ts=2 sw=2 et mouse=a cindent
-
 "map <F9> :call Run()<CR>
 "func! Run()
 "    exec "w"
 "    exec "!g++ % -o %<"
 "    exec "! %<"
 "endfunc
-
 "map <F2> :call SetTitle()<CR>
 "func SetTitle()
 "    let l = 0

@@ -1,2 +1,9 @@
-# ACM-Code-Library
-ACM Team Under The Keyboard's Code Library
+# 键盘侠(Under The Keyboard)模板
+###### `commit`信息格式(所有标点符号均为英文半角):
+
+1. `添加 "文件"`
+2. `修改 "文件"`
+3. `删除 "文件"`
+
+若一次提交更改多个文件并进行多种操作则以逗号分隔
+

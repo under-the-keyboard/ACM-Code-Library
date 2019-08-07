@@ -1,6 +1,5 @@
 #define lowbit(x) (x&(-x))
 const int maxn = "Edit";
-
 struct BitTree {
   int arr[maxn];
   void Init() {

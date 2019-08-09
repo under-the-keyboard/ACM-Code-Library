@@ -11,7 +11,7 @@ void Union(int u, int v) {
 std::vector<int> g[maxn];
 bool vis[maxn];
 struct query { int v, id; };
-query qry[maxm];
+std::vector<query> qry[maxm];
 void Init() {
   for (int i = 1; i <= n; ++i) {
     pre[i] = i;

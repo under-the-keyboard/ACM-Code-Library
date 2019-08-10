@@ -39,10 +39,10 @@ struct SplayTree {
   }
   // 旋转o节点到节点tar
   void Splay(int o, int tar = 0) {
-    for (int cur = fa[o]; (cur = fa[o]) != tar; Rotate(o)) {
-      Pull(fa[cur]); Pull(cur); Pull(o);
-      if (fa[cur] != tar) {
-        if (Get(o) == Get(cur)) Rotate(cur);
+    for (int f = fa[o]; (f = fa[o]) != tar; Rotate(o)) {
+      Pull(fa[f]); Pull(f); Pull(o);
+      if (fa[f] != tar) {
+        if (Get(o) == Get(f)) Rotate(f);
         else Rotate(o);
       }
     }

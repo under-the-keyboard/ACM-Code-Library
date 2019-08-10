@@ -1,5 +1,5 @@
 const int maxn = "Edit";
-struct PersTree {
+struct FuncSegTree {
   int tot;
   int rt[maxn];
   int lson[maxn * 40], rson[maxn * 40];

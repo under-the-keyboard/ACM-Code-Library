@@ -23,7 +23,7 @@ void Tarjan(int u) {
   for (int &v : g[u]) {
     if (vis[v]) continue;
     Tarjan(v);
-    Union(u, v);
+    Union(v, u);
   }
   for (query &q : qry[u]) {
     if (vis[q.v]) ans[q.id] = Find(q.v);

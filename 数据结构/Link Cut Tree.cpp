@@ -18,7 +18,7 @@ struct LCT {
     sum[o] = val[o] ^ sum[son[o][0]] ^ sum[son[o][1]];
   }
   void Push(int o) {
-    if (!rev[o] != 0) {
+    if (rev[o] != 0) {
       std::swap(son[o][0], son[o][1]);
       if (son[o][0]) rev[son[o][0]] ^= 1;
       if (son[o][1]) rev[son[o][1]] ^= 1;

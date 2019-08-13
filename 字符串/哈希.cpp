@@ -1,4 +1,6 @@
 struct Hash{
+    // mod 402653189，805306457，1610612741，1e9+7
+    // base 131, 233
     long long p[maxn], hash[maxn], base = 131;
     long long getHash(int l, int r) {
         long long ans = (hash[r] - hash[l-1] * p[r-l+1]) % mod;

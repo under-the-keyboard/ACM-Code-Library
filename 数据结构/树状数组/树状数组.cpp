@@ -1,38 +1,32 @@
 const int maxn = "Edit";
 struct BitTree {
-  int arr[maxn];
+  int tree[maxn];
   void Init() {
-    memset(arr, 0, sizeof(arr));
+    memset(tree, 0, sizeof(tree));
   }
   void Modify(int x, int v) {
-    while (x < maxn) {
-      arr[x] += v;
-      x += x & (-x);
-    }
+    for (int i = x; i < maxn; i += i & (-i))
+      tree[i] += v;
   }
   int Query(int x) {
     int ret = 0;
-    while (x > 0) {
-      ret += arr[x];
-      x -= x & (-x);
-    }
+    for (int i = x; i > 0; i -= i & (-i))
+      ret += tree[i];
     return ret;
   }
   int GetRank(int v) {
     int ret = 1;
     --v;
-    while (v) {
-      ret += arr[v];
-      v -= v & (-v);
-    }
+    for (int i = v; i > 0; i -= i & (-i))
+      ret += tree[i];
     return ret;
   }
   int GetKth(int k) { // kth min
     int ret = 0, cnt = 0, max = log2(maxn);
     for (int i = max; i >= 0; --i) {
       ret += (1 << i);
-      if (ret >= maxn || cnt += arr[ret] >= k) ret -= (1 << i);
-      else cnt += arr[ret];
+      if (ret >= maxn || cnt += tree[ret] >= k) ret -= (1 << i);
+      else cnt += tree[ret];
     }
     return ++ret;
   }

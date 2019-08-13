@@ -1,30 +1,29 @@
-#define lowbit(x) (x&(-x))
 const int maxn = "Edit";
 struct BitTree {
   int arr[maxn];
   void Init() {
     memset(arr, 0, sizeof(arr));
   }
-  void Modify(int idx, int x) {
-    while (idx < maxn) {
-      arr[idx] += x;
-      idx += lowbit(idx);
+  void Modify(int x, int v) {
+    while (x < maxn) {
+      arr[x] += v;
+      x += x & (-x);
     }
   }
-  int Query(int idx) {
+  int Query(int x) {
     int ret = 0;
-    while (idx > 0) {
-      ret += arr[idx];
-      idx -= lowbit(idx);
+    while (x > 0) {
+      ret += arr[x];
+      x -= x & (-x);
     }
     return ret;
   }
-  int GetRank(int x) {
+  int GetRank(int v) {
     int ret = 1;
-    --x;
-    while (x) {
-      ret += arr[x];
-      x -= lowbit(x);
+    --v;
+    while (v) {
+      ret += arr[v];
+      v -= v & (-v);
     }
     return ret;
   }
@@ -37,10 +36,10 @@ struct BitTree {
     }
     return ++ret;
   }
-  int GetPrev(int x) {
-    return GetKth(GetRank(x) - 1);
+  int GetPrev(int v) {
+    return GetKth(GetRank(v) - 1);
   }
-  int GetNext(int x) {
-    return GetKth(GetRank(x) + 1);
+  int GetNext(int v) {
+    return GetKth(GetRank(v) + 1);
   }
 };

@@ -10,14 +10,12 @@ void Union(int u, int v) {
 }
 std::vector<int> g[maxn];
 bool vis[maxn];
-int anc[maxn];
 struct query { int v, id; };
-query qry[maxm];
+std::vector<query> qry[maxm];
 void Init() {
   for (int i = 1; i <= n; ++i) {
     pre[i] = i;
     vis[i] = false;
-    anc[i] = i;
   }
 }
 void Tarjan(int u) {
@@ -25,10 +23,9 @@ void Tarjan(int u) {
   for (int &v : g[u]) {
     if (vis[v]) continue;
     Tarjan(v);
-    Union(u, v);
-    anc[Find(u)] = u;
+    Union(v, u);
   }
   for (query &q : qry[u]) {
-    if (vis[q.v]) ans[q.id] = anc[Find(q.v)];
+    if (vis[q.v]) ans[q.id] = Find(q.v);
   }
 }

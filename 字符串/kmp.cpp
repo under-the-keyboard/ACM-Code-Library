@@ -19,4 +19,5 @@ struct KMP{ // 下标0
 		}
 		return cnt; // 匹配个数
 	}
+	// (len - nex[len]) 最小循环节，前提len % (len - nex[len]) = 0
 }kmp;

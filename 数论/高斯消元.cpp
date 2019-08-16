@@ -2,16 +2,13 @@ const int Mod = 1e9 + 7;
 const int maxn = 1e3 + 5;
 const double eps = 0.0000001;
 const int INF = 0x3f3f3f3f;
-
 int n, m;
 double a[maxn][maxn], x[maxn];
 bool manySolutionFlag = false, noSolution = false;
-
 void Swap(int i, int j) {
     for (int k = 1; k <= n + 1; k ++)
         swap(a[i][k], a[j][k]);
 }
-
 bool Check(int i) {
     bool vis = false;
     for (int j = 1; j <= n; j ++) {
@@ -20,7 +17,6 @@ bool Check(int i) {
     if(!vis && fabs(a[i][n + 1]) >= eps) return false;
     return true;
 }
-
 void GS() {
     for (int i = 1; i <= n; i ++) {
         bool flag = false;
@@ -53,7 +49,6 @@ void GS() {
         x[i] = a[i][n + 1] * 1./a[i][i] * 1.;
     }
 }
-
 int main()
 {
     cin >> n >> m;
@@ -69,5 +64,3 @@ int main()
     }
     return 0;
 }
-
-

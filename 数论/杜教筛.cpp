@@ -5,14 +5,12 @@ long long phi[M + 30], prim[M + 30], tot;
 bool mark[M + 30];
 map<long long, long long> m;
 #define inv_2 (Mod+1)/2
-
 long long Add(long long a, long long b) {
     long long c = (a + b) % Mod;
     if(c >= Mod) return c - Mod;
     if(c < 0) return c + Mod;
     return c;
 }
-
 void init() {
     phi[1] = 1;
     for(long long i = 2; i <= M; i ++) {
@@ -32,7 +30,6 @@ void init() {
     }
     for (int i = 1; i <= M; i ++) phi[i] = Add(phi[i-1], phi[i]);
 }
-
 long long getPhi(long long n) {
     if(n <= M) return phi[n];
     if(m[n]) return m[n];
@@ -52,7 +49,6 @@ long long solve(long long n) {
     }
     return ans;
 }
-
 int main()
 {
     init();
@@ -65,5 +61,4 @@ int main()
 /*
 gcd之和
 gcd(i,j)(1<=i<=n)(1<=j<=m)
- 
- * /
+* /

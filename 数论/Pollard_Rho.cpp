@@ -1,12 +1,10 @@
 long long factor[1000005];
 int tot;
 const int S=50;
-
 long long Ksc(long long a, long long b, long long mod) {
     a %= mod, b %= mod;
     return ((a * b - (long long)((long long)((long double)a / mod * b + 1e-3) * mod)) % mod + mod) % mod;
 }
-
 long long Ksm(long long a, long long b, long long mod) {
     long long res = 1;
     while(b) {
@@ -16,7 +14,6 @@ long long Ksm(long long a, long long b, long long mod) {
     }
     return res;
 }
-
 bool check(long long a, long long n, long long x, long long t) {
     long long ret = Ksm(a, x, n);
     long long last = ret;
@@ -28,7 +25,6 @@ bool check(long long a, long long n, long long x, long long t) {
     if(ret != 1) return true;
     return false;
 }
-
 bool Miller_Rabin(long long n) {//判素数
     if(n < 2) return false;
     if(n == 2) return true;
@@ -46,7 +42,6 @@ bool Miller_Rabin(long long n) {//判素数
     }
     return true;
 }
-
 long long gcd(long long a,long long b) {
     if(a == 0) return 1;
     if(a < 0) return gcd(-a, b);
@@ -57,7 +52,6 @@ long long gcd(long long a,long long b) {
     }
     return a;
 }
-
 long long pollard_rho(long long x,long long c) {
     long long i = 1, k = 2;
     long long x0 = rand() % x;
@@ -86,7 +80,6 @@ void findphi(long long n) {
     findphi(p);
     findphi(n/p);
 }
-
 int main() {
     long long n;
     while(scanf("%I64d",&n)!=EOF) {

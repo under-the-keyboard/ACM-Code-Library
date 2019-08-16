@@ -3,18 +3,15 @@ const int inf = 0x3f3f3f3f;
 const int mod = 1e9 + 7;
 typedef complex<double> cp;
 const double PI = acos(-1);
-
 char sa[maxn], sb[maxn];
 int n = 1, lena, lenb, res[maxn];
 cp a[maxn], b[maxn], omg[maxn], inv[maxn];
-
 void init() {
     for (int i = 0; i < n; i ++) {
         omg[i] = cp(cos(2*PI*i/n), sin(2*PI*i/n));
         inv[i] = conj(omg[i]);
     }
 }
-
 void fft(cp *a, cp *omg) {
     int lim = 0;
     while((1<<lim) < n) lim++;
@@ -34,8 +31,6 @@ void fft(cp *a, cp *omg) {
             }
     }
 }
-
-
 int main() {
     scanf("%d", &n);
     scanf("%s%s", sa, sb);

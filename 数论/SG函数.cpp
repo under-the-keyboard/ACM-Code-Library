@@ -1,15 +1,10 @@
 int SG[maxn], S[maxn];
 int f[maxn];
-
-void ff() {
+void ff() {//f是每一次走的步数
     f[0] = 1;
     for (int i = 1; i <= 10; i ++)
         f[i] = f[i-1] * 2;
 }
-/*
-f是每一次走的步数
-*/
-
 void getSG(int n) {
     ff();
     for (int i = 1; i <= n; i ++) {
@@ -23,7 +18,6 @@ void getSG(int n) {
             }
     }
 }
-
 int main() { 
     int n;
     getSG(1000);

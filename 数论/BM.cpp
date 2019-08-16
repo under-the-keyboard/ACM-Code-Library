@@ -4,7 +4,6 @@
 const long long mod = 998244353;
 #define sz(x) ((int)(x).size())
 typedef vector<long long> VI;
-
 long long Ksm(long long a, long long b) {
     long long res = 1; a %= mod;
     assert(b >= 0);
@@ -15,13 +14,11 @@ long long Ksm(long long a, long long b) {
     }
     return res;
 }
-
 int _, n;
 namespace Linear_Seq{
     const int N = 10010;
     long long res[N], base[N], _c[N], _md[N];
     vector<int> Md;
-    
     void Mul(long long *a, long long *b, int k) {
         for (int i = 0; i < k+k; i ++) _c[i] = 0;
         for (int i = 0; i < k; i ++)
@@ -33,7 +30,6 @@ namespace Linear_Seq{
         for (int i = 0; i < k; i ++)
             a[i] = _c[i];
     }
-
     int solve(long long n, VI a, VI b) {
         long long ans = 0, pnt = 0;
         int k = sz(a);
@@ -58,7 +54,6 @@ namespace Linear_Seq{
         if(ans < 0) ans += mod;
         return ans;
     }
-
     VI BM(VI s) {
         VI C(1, 1), B(1, 1);
         int L = 0, m = 1, b = 1;
@@ -82,7 +77,6 @@ namespace Linear_Seq{
         }
         return C;
     }
-
     int Gao(VI a, long long n) { //得到第n项
         VI c = BM(a);
         c.erase(c.begin());
@@ -91,8 +85,6 @@ namespace Linear_Seq{
     }
 };
 using namespace Linear_Seq;
-
-
 void solve() { //预处理前3k项
     long long n, k;
     scanf("%lld %lld", &n, &k);
@@ -116,19 +108,15 @@ void solve() { //预处理前3k项
     }
     printf("%lld\n", Gao(v, n));
 }
-
 int main() {
     solve();
     return 0;
 }
 //另一个板子
-#include<bits/stdc++.h>
 #define maxk 100005
 #define maxn 200005
-const int mod = 998244353;
- 
+const int mod = 998244353; 
 #define mul(x, y) static_cast<long long> (x) * (y) % mod
- 
 namespace Math {
 	inline int pw(int base, int p) {
 		static int res; res = 1;
@@ -142,7 +130,6 @@ namespace Math {
 	inline int inv(int x) { return pw(x, mod - 2); }
 }
 inline void reduce(int &x) { x += x >> 31 & mod; }
- 
 namespace Poly {
 #define N maxn
 	int lim, s, rev[N], Wn[N];
@@ -172,7 +159,6 @@ namespace Poly {
 			std::reverse(A + 1, A + lim);
 		}
 	}
- 
 	void INV(int *A, int *B, int n) {  //多项式A求逆到B，[0,n-1]
 		if (n == 1) { *B = Math::inv(*A); return ; }
 		static int C[N], D[N];
@@ -185,7 +171,6 @@ namespace Poly {
 		FFT(D, 0);
 		std::memcpy(B + len, D + len, n - len << 2);
 	}
- 
 	int G[N], INVG[N];
 	void DIV(int *A, int *Q, int n, int m) {
 		static int C[N];
@@ -204,7 +189,6 @@ namespace Poly {
 		FFT(R, 0);
 		for (int i = 0; i < m; ++i) reduce(R[i] = A[i] - R[i]);
 	}
- 
 	void POW(int *A, int p, int m) {
 		if (!p) return ;
 		POW(A, p >> 1, m);
@@ -219,7 +203,6 @@ namespace Poly {
 		}
 		DIV_MOD(T, A, 2 * m, m + 1);
 	}
- 
 	int solve(int *f, int *a, int n, int k) { //a为递推式0~k-1项，f为转移数组1~k项
 		static int A[maxn], B[maxn];
 		for (int i = 1; i <= k; ++i) reduce(G[k - i] = -f[i]);
@@ -234,7 +217,6 @@ namespace Poly {
 	}
 #undef N
 }
- 
 int n, k;
 int f[maxk], a[maxk];
 int main() {
@@ -248,17 +230,11 @@ int main() {
     // for (int i = 0; i < n; i ++) 
     //     printf("%d ", f[i]);
     // printf("\n");
-    
-    // a(n)=f(i)*a(n-i) {1<=i<=k}
-     
+    // a(n)=f(i)*a(n-i) {1<=i<=k}    
 	std::ios::sync_with_stdio(false), std::cin.tie(0), std::cout.tie(0);
 	std::cin >> n >> k;
 	for (int i = 1; i <= k; ++i) std::cin >> f[i];
 	for (int i = 0; i < k; ++i) std::cin >> a[i], reduce(a[i]);
-    // for (int n = 0; n <= 10; n ++) {
-        // std::cout << "n: " << n << " ";
-	    std::cout << Poly::solve(f, a, n, k) << '\n';
-    // }
-    
+	std::cout << Poly::solve(f, a, n, k) << '\n';
 	return 0;
 }

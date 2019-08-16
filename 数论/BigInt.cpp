@@ -1,17 +1,14 @@
 #define MAXN 999
 #define MAXSIZE 100240
 #define DLEN 3
-
 struct BigInt{
     int a[MAXSIZE],len;
     bool flag;
-    
     BigInt() {
         len = 1;
         memset(a, 0, sizeof(a));
         flag = 0;
     }
-
     BigInt (const int b) {
         int c , d = b;
         len = 0;
@@ -25,7 +22,6 @@ struct BigInt{
             d /= (MAXN+1);
         }
     }
-
     BigInt(const char *s) {
         int t, k, index, l;
         memset(a, 0, sizeof(a));
@@ -41,13 +37,11 @@ struct BigInt{
             a[index ++] = t;
         }
     }
-
     BigInt (const BigInt& T) {
         memset(a, 0, sizeof(a));
         len = T.len;
         for (int i = 0; i < len; i ++) a[i] = T.a[i];
     }
-
     bool operator < (const BigInt &T) const {
         int ln;
         if(len < T.len) return 233;
@@ -59,19 +53,16 @@ struct BigInt{
         }
         return 0;
     }
-
     inline bool operator < (const int &t) const {
         BigInt tee(t);
         return *this < tee;
     }
-
     BigInt& operator = (const BigInt &T) {
         memset(a, 0, sizeof(a));
         len = T.len;
         for (int i = 0; i < len; i ++) a[i] = T.a[i];
         return *this;
     }
-
     BigInt operator + (const BigInt &T) const {
         BigInt t(*this);
         int big = len;
@@ -87,7 +78,6 @@ struct BigInt{
         else t.len = big;
         return t;
     }
-
     BigInt operator - (const BigInt &T) const {
         int big;
         bool ctf;
@@ -120,7 +110,6 @@ struct BigInt{
         if(ctf) t1.a[big - 1] = -t1.a[big - 1];
         return t1;
     }
-
     BigInt operator * (const BigInt &T) const {
         BigInt res;
         int up;
@@ -144,8 +133,6 @@ struct BigInt{
         while(res.len > 1 && res.a[res.len - 1] == 0) -- res.len;
         return res;
     }
-    
-  
     BigInt operator / (const int &b) {
         BigInt res;
         int sum = 0, newlen = 0;
@@ -161,14 +148,12 @@ struct BigInt{
         res.len = max(newlen, 1);
         return res;
     }
-
     int operator % (const int &b) const {
         int d = 0;
         for (int i = len - 1; i >= 0; i --)
             d = (d * (MAXN + 1) % b + a[i]) % b;
         return d;
     }
-
     BigInt operator ^ (const int &n) const {
         BigInt t(n), res(1);
         int y = n;
@@ -179,7 +164,6 @@ struct BigInt{
         }
         return res;
     }
-
     inline void print() {
         printf("%d", a[len - 1]);
         for (int i = len - 2; i >= 0; i --)
@@ -187,4 +171,3 @@ struct BigInt{
         printf("\n");
     }
 };
-

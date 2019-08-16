@@ -18,7 +18,6 @@ long long inv(long long a) {
     }
     return (x % M + M) % M;
 }
- 
 long long fac[maxn];
 void getfac() {
     fac[0] = 1;
@@ -32,7 +31,6 @@ long long C(long long n, long long m) {
     }
     return fac[n] * inv(fac[m]) % M * inv(fac[n - m]) % M;
 }
-
 long long lucas(long long n, long long m) {
     if (m == 0) {
         return 1;

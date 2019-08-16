@@ -1,28 +1,21 @@
-const int maxn = 1e6 + 5;
+const int maxn = 1e6 + 5; //矩阵
 long long mod;
- 
 struct Matrix{
     long long mat[2][2];
- 
     Matrix() {memset(mat, 0, sizeof(mat));};
- 
     void init() {
         mat[0][0] = mat[1][1] = 1;
     }
- 
     void init(long long a, long long b) {
         mat[0][0] = 0; mat[0][1] = b;
         mat[1][0] = 1; mat[1][1] = a;
     }
- 
     void operator = (Matrix x) {
         for (int i = 0; i <= 1; i ++)
             for (int j = 0; j <= 1; j ++)
                 mat[i][j] = x.mat[i][j];
     }
- 
 };
- 
 void Print(Matrix x) {
     for (int i = 0; i <= 1; i ++) {
         for (int j = 0; j <= 1; j ++)
@@ -30,7 +23,6 @@ void Print(Matrix x) {
         cout << endl;
     }
 }
- 
 Matrix operator * (Matrix x, Matrix y) {
     Matrix t;
     for (int i = 0; i <= 1; i ++)
@@ -39,7 +31,6 @@ Matrix operator * (Matrix x, Matrix y) {
                 t.mat[i][j] = (t.mat[i][j] + x.mat[i][k] * y.mat[k][j]) % mod;
     return t;
 }
- 
 Matrix Ksm(Matrix x, long long b) {
     Matrix t; t.init();
     while(b) {
@@ -49,8 +40,6 @@ Matrix Ksm(Matrix x, long long b) {
     }
     return t;
 }
- 
- 
 int main() {
     long long x0, x1, a, b;
     scanf("%lld %lld %lld %lld", &x0, &x1, &a, &b);

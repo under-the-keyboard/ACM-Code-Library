@@ -1,0 +1,41 @@
+\documentclass[twocolumn]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\setlength{\columnsep}{2em}
+\lstset{breaklines}
+\lstset{extendedchars=false}
+\definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}
+\lstset{language=C++,
+	keywordstyle=\color{keywordcolor} \bfseries,
+	identifierstyle=,
+%	numbers=left,
+	basicstyle=\scriptsize\fontspec{[monaco.ttf]},
+%	basicstyle=\scriptsize\sffamily,
+	commentstyle=\color{blue} \textit,
+	stringstyle=\ttfamily,
+	showstringspaces=false,
+	frame=single,
+	captionpos=b
+}
+
+\pagestyle{fancy}
+\fancyhf{河南大学软件学院}
+\fancyhead[C]{键盘侠(Under The Keyboard)}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+\author{刘阳\ \ 袁昊\ \ 邓宏亮}
+\title{算法模板}
+
+\begin{document}
+	\maketitle
+	\clearpage
+    \tableofcontents
+    \clearpage

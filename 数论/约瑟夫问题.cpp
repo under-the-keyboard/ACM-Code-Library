@@ -1,5 +1,4 @@
-//N 个人, 第K 淘汰
-long long Josephus(long long N, long long K) {
+long long Josephus(long long N, long long K) {//N 个人, 第K 淘汰
     if(N == 1) return 0;
     if(N < K) {
         long long ret = 0;

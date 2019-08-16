@@ -1,19 +1,16 @@
 struct LB{
     long long b[35], nb[35], tot;
     bool flag;
-
     LB () {  // 初始化
         memset(b, 0, sizeof(b));
         flag = false;
     }
-
     LB(const LB& a) {
         for (int i = 0; i < 35; i ++) 
             b[i] = a.b[i];
         flag = a.flag;
     }
-
-   void Ins(long long x) { //插入
+    void Ins(long long x) { //插入
         for (int i = 34; i >= 0; i --) 
             if(x & (1ll << i)) {
                 if(!b[i]) { b[i] = x; return; }
@@ -21,28 +18,24 @@ struct LB{
             }
         flag = true; //能xor出0
     }
-
     bool Fin(long long x) {
         if(x == 0 && flag) return true;
         for (int i = 34; i >= 0; i --) 
             if(x >> i) x ^= b[i];
         return x == 0;
     }
-
     long long getMax(long long x) { // 得到最大值
         long long res = x;
         for (int i = 34; i >= 0; i --) 
             res = max(res, res ^ b[i]);
         return res;
     }
-
     long long getMin(long long x) { // 得到最大值
         long long res = x;
         for (int i = 0; i <= 34; i ++)
             if(b[i]) res ^= b[i];
         return res;
     }
-
     long long ReBuild() { // 重新Build 为下面的Kth
         for (int i = 34; i >= 0; i --) {
             if(b[i] == 0) continue;
@@ -54,7 +47,6 @@ struct LB{
         for (int i = 0; i <= 34; i ++) 
             if(b[i]) nb[tot++] = b[i];
     }
-
     long long Kth_Max(long long k) { // 得到第k小的数，k>1,
         if(flag) k --;
         if(k == 0) return 0;
@@ -64,7 +56,6 @@ struct LB{
             if(k & (1ll << i)) res ^= nb[i];
         return res;
     }
-
     LB Corss(LB k) { //求交集
         LB res, tmp = k;
         for (int i = 0; i < 35; i ++) {
@@ -85,7 +76,6 @@ struct LB{
         }
         return res;
     }
-
     LB Merge(LB u) { //合并两个线性集
         LB w = *this;
         for (int i = 34; i >= 0; i--) {
@@ -94,5 +84,4 @@ struct LB{
         }
         return w;
     }
-
 };

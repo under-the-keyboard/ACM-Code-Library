@@ -1,5 +1,4 @@
-long long M[maxn], C[maxn];
-//模数， 余数
+long long M[maxn], C[maxn];//模数， 余数
 long long mul(long long a, long long b, long long p) {
     if(b < 0) b = -b;
     long long ans = 0;
@@ -10,11 +9,9 @@ long long mul(long long a, long long b, long long p) {
     }
     return ans;
 }
-
 long long gcd(long long a, long long b) {
     return !b ? a : gcd(b, a %b);
 }
-
 long long exgcd(long long a, long long b, long long &x, long long &y) {
     if(!b) {
         x = 1;
@@ -27,14 +24,12 @@ long long exgcd(long long a, long long b, long long &x, long long &y) {
     y = t - (a / b) * y;
     return d;
 }
-
 long long getInv(long long a, long long p) {
     long long x, y;
     exgcd(a, p, x, y);
     x = (x % p + p) % p;
     return x;
 }
-
 long long exCrt() {
     for (long long i = 2; i <= n; i ++) {
         long long M1 = M[i - 1], M2 = M[i];
@@ -49,4 +44,3 @@ long long exCrt() {
     }
     return C[n];
 }
-

@@ -1,5 +1,4 @@
-//线性打欧拉函数
-int phi[maxn], prime[maxn], tot;
+int phi[maxn], prime[maxn], tot;//线性打欧拉函数
 bool vis[maxn];
 void init() {
     phi[1] = 1;
@@ -19,11 +18,9 @@ void init() {
         }
     }
 }
-//线性打莫比乌斯函数
 bool vis[maxn];
 int mu[maxn], prime[maxn];
-
-void Mobius() {
+void Mobius() {//线性打莫比乌斯函数
     mu[1] = 1;
     int tot = 0;
     for (int i = 2; i < maxn; i ++) {

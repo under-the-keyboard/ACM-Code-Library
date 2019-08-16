@@ -9,10 +9,7 @@ int getPhi(int n) {
     if(n > 1) rea = rea - rea / n;
     return rea;
 }
-
-//递推
-int phi[maxn];
-
+int phi[maxn];//递推
 void getPhi() {
     for (int i = 1; i < maxn; i ++)
         phi[i] = i;
@@ -21,7 +18,3 @@ void getPhi() {
             for (int j = i; j < maxn; j += i) 
                 phi[j] = (phi[j] / i) * (i-1);
 } 
-
-
-
-

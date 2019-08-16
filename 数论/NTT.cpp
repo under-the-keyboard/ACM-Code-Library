@@ -3,10 +3,8 @@ const int inf = 0x3f3f3f3f;
 const int mod = 998244353;
 #define Mod(x) ((x)>=mod?(x)-mod:(x))
 #define g 3
-
 int rnk[maxn];
 long long a[maxn], b[maxn];
-
 long long Ksm(long long a, long long b) {
     long long res = 1;
     while(b) {
@@ -16,7 +14,6 @@ long long Ksm(long long a, long long b) {
     }
     return res;
 }
-
 void init(int n) {
     memset(rnk, 0, sizeof(rnk));
     int lim = 0;
@@ -24,8 +21,6 @@ void init(int n) {
     for (int i = 0; i < n; i ++) 
         rnk[i] = (rnk[i>>1]>>1) | ((i&1) << (lim-1));
 }
-
-
 void ntt(long long *a, int op, int n) {
     for (int i = 0; i < n; i ++) 
         if(i < rnk[i]) swap(a[i], a[rnk[i]]);
@@ -44,10 +39,8 @@ void ntt(long long *a, int op, int n) {
         for (int i = 0, inv = Ksm(n, mod-2); i < n; i ++)
             a[i] = 1ll * a[i] * inv % mod;
 }
-
 char s1[maxn], s2[maxn];
 long long ans[maxn];
-
 int main() {
     scanf("%s", s1);
     scanf("%s", s2);
@@ -75,18 +68,15 @@ int main() {
     return 0;
 }
 //三模NTT
-
 #define long long long long 
 const long long maxn = 3 * 1e6 + 10;
 #define swap(x,y) x ^= y, y ^= x, x ^= y
 using namespace std;
 long long a[maxn], b[maxn];
-
 long long Mul(long long a, long long b, long long mod) {
     a %= mod, b %= mod;
     return ((a * b - (long long)((long long)((long double)a / mod * b + 1e-3) * mod)) % mod + mod) % mod;
 }
-
 long long Ksm(long long a, long long p, long long mod) {
     long long base = 1;
     while(p) {
@@ -95,7 +85,6 @@ long long Ksm(long long a, long long p, long long mod) {
     }
     return base % mod;
 } 
-
 namespace NTT{
 
     const long long P1 = 469762049, P2 = 998244353, P3 = 1004535809, g = 3; 
@@ -109,13 +98,11 @@ namespace NTT{
         输入两个数n=1
         输入一个数n=0;
     */
-
     void init(long long n) { //初始化，传入alen+blen,得到最小的len
         len = 1; lim = 0;
         while(len <= n) len <<= 1, lim++;
         for(long long i = 0; i <= len; i++) r[i] = (r[i >> 1] >> 1) | ((i & 1) << (lim - 1));
     }
-
     void ntt_Mod(long long *a, const long long n, const long long type, const long long mod) { //ntt
         for(long long i = 0; i < n; i++) if(i < r[i]) swap(a[i], a[r[i]]);
         for(long long mid = 1; mid < n; mid <<= 1) {
@@ -135,31 +122,25 @@ namespace NTT{
                 a[i] = 1ll * a[i] * inv % mod;
         }
     }
-
     void Out(long long *a, long long len) {
         for (int i = 0; i <= len; i ++) 
             cout << a[i] << " ";
         cout << endl;
     }
-
     int ntt_Mul(long long *a, long long *b, long long alen, long long blen, long long mod) {
         init(alen + blen);
         memcpy(tmp1, a, sizeof(tmp1)); memcpy(tmp2, b, sizeof(tmp2));
         ntt_Mod(tmp1, len, 1, P1); ntt_Mod(tmp2, len, 1, P1);
         for(long long i = 0; i <= len; i++) ans[0][i] = 1ll * tmp1[i] * tmp2[i] % P1;
-        
         memcpy(tmp1, a, sizeof(tmp1)); memcpy(tmp2, b, sizeof(tmp2));
         ntt_Mod(tmp1, len, 1, P2); ntt_Mod(tmp2, len, 1, P2);
         for(long long i = 0; i <= len; i++) ans[1][i] = 1ll * tmp1[i] * tmp2[i] % P2;
-        
         memcpy(tmp1, a, sizeof(tmp1)); memcpy(tmp2, b, sizeof(tmp2));
         ntt_Mod(tmp1, len, 1, P3); ntt_Mod(tmp2, len, 1, P3);
         for(long long i = 0; i <= len; i++) ans[2][i] = 1ll * tmp1[i] * tmp2[i] % P3;
-        
         ntt_Mod(ans[0], len, -1, P1);
         ntt_Mod(ans[1], len, -1, P2);
         ntt_Mod(ans[2], len, -1, P3);
-        
         for(long long i = 0; i <= alen + blen; i++) {
             long long t = (Mul(1ll * ans[0][i] * P2 % PP, Ksm(P2 % P1, P1 - 2, P1), PP) + 
                     Mul(1ll * ans[1][i] * P1 % PP, Ksm(P1 % P2, P2 - 2, P2), PP) ) % PP;
@@ -168,7 +149,6 @@ namespace NTT{
         }
         return alen + blen;
     }
-
     int ntt_Ksm(long long *a, long long b, int blen, long long mod) {
         memcpy(base, a, sizeof(base));
         memset(a, 0, maxn*sizeof(a));
@@ -182,7 +162,6 @@ namespace NTT{
         return alen;
     }
 }
-
 int main() {
     long long n, m, p;
     scanf("%lld %lld %lld", &n, &m, &p);

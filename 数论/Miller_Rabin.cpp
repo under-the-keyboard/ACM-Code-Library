@@ -1,10 +1,8 @@
 #define random(a, b) (((double)rand()/RAND_MAX)*(b-a)+a)
-
 long long Ksc(long long a, long long b, long long mod) {
     a %= mod, b %= mod;
     return ((a * b - (long long)((long long)((long double)a / mod * b + 1e-3) * mod)) % mod + mod) % mod;
 }
-
 long long Ksm(long long a, long long b, long long mod) {
     long long res = 1;
     while(b) {
@@ -14,7 +12,6 @@ long long Ksm(long long a, long long b, long long mod) {
     }
     return res;
 }
-
 bool Miller_Rabin(long long n) {
     if(n <= 2) {
         if(n == 2) return true;

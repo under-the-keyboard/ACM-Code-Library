@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 typedef double db; // typedef long double db;
 const db inf = 1e100;
 const db eps = 1e-9;
@@ -65,6 +64,27 @@ struct circle { point o; db r; };
 std::vector<point> TagentCP(circle k1, point k2) {
   db a = GetLen(k2 - k1.o), b = k1.r * k1.r / a, c = std::sqrt(Max(0., k1.r * k1.r - b * b));
   point k = GetUnit(k2 - k1.o), m = k1.o + k * b, del = Rotate90(k) * c;
+  return {m - del, m + del};
+}
+// 返回公切线数量
+int CheckPosCC(circle k1, circle k2) {
+  if (Cmp(k1.r, k2.r) == -1) std::swap(k1, k2);
+  double dis = k1.o.Dis(k2.o);
+  int w1 = Cmp(dis, k1.r + k2.r), w2 = Cmp(dis, k1.r - k2.r);
+  if (w1 > 0) return 4;
+  if (w1 == 0) return 3;
+  else if (w2 > 0) return 2;
+  else if (w2 == 0) return 1;
+  return 0;
+}
+// 返回两圆交点
+std::vector<point> GetCC(circle k1, circle k2) {
+  int pd = CheckPosCC(k1, k2);
+  if (pd == 0 || pd == 4) return {};
+  double a = (k2.o - k1.o).Abs2();
+  double cosA = (k1.r * k1.r + a - k2.r * k2.r) / (2 * k1.r * sqrt(std::max(a, 0.0)));
+  double b = k1.r * cosA, c = sqrt(std::max(0.0, k1.r * k1.r - b * b));
+  point k = (k2.o - k1.o).Unit(), m = k1.o + k * b, del = k.Turn90() * c;
   return {m - del, m + del};
 }
 circle GetCircle(point k1, point k2, point k3) {
@@ -188,4 +208,3 @@ db RotateCaliper(poly p) {
   }
   return ret;
 }
-int main() { return 0; }

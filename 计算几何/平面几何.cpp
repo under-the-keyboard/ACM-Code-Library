@@ -18,7 +18,7 @@ db operator ^ (point k1, point k2) { return k1.x * k2.y - k1.y * k2.x; }
 bool IsInMid(point k1, point k2, point k3) { return IsInMid(k1.x, k2.x, k3.x) && IsInMid(k1.y, k2.y, k3.y); }
 db GetLen(point k) { return std::sqrt(k * k); }
 db GetLen2(point k) { return k * k; }
-point GetUnit(point k) { db w = GetLen(k); return (point){k.x / w, k.y / w}; }
+point GetUnit(point k) { return k / GetLen(k); }
 db GetDis(point k1, point k2) { return GetLen(k2 - k1); }
 db GetDis2(point k1, point k2) { return GetLen2(k2 - k1); }
 db GetAng(point k1, point k2) { return std::atan2((k1 ^ k2), (k1 * k2)); }
@@ -60,13 +60,77 @@ point Cross(line k1, line k2) {
   db w1 = (k1.s - k2.s) ^ (k2.t - k2.s), w2 = (k2.t - k2.s) ^ (k1.t - k2.s);
   return (k1.s * w2 + k1.t * w1) / (w1 + w2);
 }
+// 平面直线图(PSLG)
+struct edge { int u, v; db ang; };
+struct PSLG {
+  int n, m, face_cnt; // 多边形数
+  point p[maxn];
+  std::vector<edge> e;
+  std::vector<int> g[maxn];
+  bool vis[maxn * 2];
+  int left[maxn * 2], prev[maxn * 2];
+  std::vector<polygon> faces; // 多边形
+  db area[maxn]; // 多边形面积
+  void Init() {
+    n = m = 0;
+    for (int i = 0; i < n; ++i) g[i].clear();
+    e.clear();
+    faces.clear();
+  }
+  // 有向线段pt.x->pt.y的极角
+  db GetAng(point pt) {
+    return std::atan2(pt.y, pt.x);
+  }
+  void AddEdge(int u, int v) {
+    e.push_back((edge){u, v, GetAng(p[v] - p[u])});
+    e.push_back((edge){v, u, GetAng(p[u] - p[v])});
+    m = e.size();
+    g[u].push_back(m - 2);
+    g[v].push_back(m - 1);
+  }
+  // 找出faces并计算面积
+  void Build() {
+    for (int u = 0; u < n; ++u) {
+      int sz = g[u].size();
+      for (int i = 0; i < sz; ++i)
+        for (int j = i + 1; j < sz; ++j)
+          if (e[g[u][i]].ang > e[g[u][j]].ang) std::swap(g[u][i], g[u][j]);
+      for (int i = 0; i < sz; ++i) prev[g[u][(i + 1) % sz]] = g[u][i];
+    }
+    face_cnt = 0;
+    memset(vis, false, sizeof(vis));
+    for (int u = 0; u < n; ++u) {
+      int sz = g[u].size();
+      for (int i = 0; i < sz; ++i) {
+        int v = g[u][i];
+        // 卷包裹逆时针找圈
+        if (!vis[v]) {
+          ++face_cnt;
+          polygon poly;
+          while (true) {
+            vis[v] = 1;
+            left[v] = face_cnt;
+            int f = e[v].u;
+            poly.push_back(p[f]);
+            v = prev[v ^ 1];
+            if (v == g[u][i]) break;
+            assert(vis[v] == 0);
+          }
+          faces.push_back(poly);
+        }
+      }
+    }
+    for (int i = 0; i < face_cnt; ++i) area[i] = GetArea(faces[i]);
+  }
+};
 struct circle { point o; db r; };
+// 切点
 std::vector<point> TagentCP(circle k1, point k2) {
   db a = GetLen(k2 - k1.o), b = k1.r * k1.r / a, c = std::sqrt(Max(0., k1.r * k1.r - b * b));
   point k = GetUnit(k2 - k1.o), m = k1.o + k * b, del = Rotate90(k) * c;
   return {m - del, m + del};
 }
-// 返回公切线数量
+// 公切线数量
 int CheckPosCC(circle k1, circle k2) {
   if (Cmp(k1.r, k2.r) == -1) std::swap(k1, k2);
   double dis = k1.o.Dis(k2.o);
@@ -77,7 +141,7 @@ int CheckPosCC(circle k1, circle k2) {
   else if (w2 == 0) return 1;
   return 0;
 }
-// 返回两圆交点
+// 交点
 std::vector<point> GetCC(circle k1, circle k2) {
   int pd = CheckPosCC(k1, k2);
   if (pd == 0 || pd == 4) return {};
@@ -127,9 +191,14 @@ circle GetMinCircle(std::vector<point> p) {
   }
   return ret;
 }
-typedef std::vector<point> poly;
-poly GrahamScan(std::vector<point> p) {
-  poly ret;
+typedef std::vector<point> polygon;
+db GetArea(polygon &poly) {
+  db ret = 0.;
+  for (int i = 0; i < poly.size(); ++i) ret += poly[i] ^ poly[(i + 1) % poly.size()];
+  return ret * 0.5;
+}
+polygon GrahamScan(std::vector<point> p) {
+  polygon ret;
   if (p.size() < 3) {
     for (point &v : p) ret.push_back(v);
     return ret;
@@ -154,7 +223,7 @@ poly GrahamScan(std::vector<point> p) {
   }
   return ret;
 }
-bool IsIn(point p, const poly &ch) {
+bool IsIn(point p, const polygon &ch) {
   point base = ch[0];
   if (Sgn((p - base) ^ (ch[1] - p)) > 0 || Sgn((p - base) ^ (ch.back() - base)) < 0) return false;
   if (!Sgn((p - base) ^ (ch[1] - p)) && Cmp(GetLen(p - base), GetLen(ch[1] - base)) <= 0) return true;
@@ -165,12 +234,12 @@ bool IsIn(point p, const poly &ch) {
   ) - ch.begin() - 1;
   return Sgn((ch[idx + 1] - ch[idx]) ^ (p - ch[idx])) >= 0;
 }
-poly Minkowski(const poly &k1, const poly &k2) {
+polygon Minkowski(const polygon &k1, const polygon &k2) {
   int sz1 = k1.size(), sz2 = k2.size();
   std::queue<point> buf1, buf2;
   for (int i = 0; i < sz1; ++i) buf1.push(k1[(i + 1) % sz1] - k1[i]);
   for (int i = 0; i < sz2; ++i) buf2.push(k2[(i + 1) % sz2] - k2[i]);
-  poly ret;
+  polygon ret;
   ret.push_back(k1[0] + k2[0]);
   while (!buf1.empty() && !buf2.empty()) {
     point tmp1 = buf1.front(), tmp2 = buf2.front();
@@ -193,7 +262,7 @@ poly Minkowski(const poly &k1, const poly &k2) {
   }
   return GrahamScan(ret);
 }
-db RotateCaliper(poly p) {
+db RotateCaliper(polygon p) {
   db ret = -inf;
   if (p.size() == 3) {
     ret = Max(ret, GetDis(p[0], p[1]));
@@ -203,7 +272,7 @@ db RotateCaliper(poly p) {
   }
   int cur = 2, sz = p.size();
   for (int i = 0; i < sz; ++i) {
-    while (Cmp(fabs((p[i] - p[(i + 1) % sz]) ^ (p[cur] - p[(i + 1) % sz])), fabs((p[i] - p[(i + 1) % sz]) ^ (p[(cur + 1) % sz] - p[(i + 1) % sz]))) < 0) cur = (cur + 1) % sz;
+    while (Cmp(std::fabs((p[i] - p[(i + 1) % sz]) ^ (p[cur] - p[(i + 1) % sz])), std::fabs((p[i] - p[(i + 1) % sz]) ^ (p[(cur + 1) % sz] - p[(i + 1) % sz]))) < 0) cur = (cur + 1) % sz;
     ret = Max(ret, GetDis(p[i], p[cur]));
   }
   return ret;

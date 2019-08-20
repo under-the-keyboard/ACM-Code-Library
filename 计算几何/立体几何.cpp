@@ -5,8 +5,8 @@ const db pi = acos(-1.);
 const db delta = 0.98;
 int Sgn(db k) { return std::fabs(k) < eps ? 0 : (k < 0 ? -1 : 1); }
 int Cmp(db k1, db k2) { return Sgn(k1 - k2); }
-int Min(db k1, db k2) { return Cmp(k1, k2) < 0 ? k1 : k2; }
-int Max(db k1, db k2) { return Cmp(k1, k2) > 0 ? k1 : k2; }
+db Min(db k1, db k2) { return Cmp(k1, k2) < 0 ? k1 : k2; }
+db Max(db k1, db k2) { return Cmp(k1, k2) > 0 ? k1 : k2; }
 struct point { db x, y, z; }
 bool operator == (point k1, point k2) { return !Sgn(k1.x - k2.x) && !Sgn(k1.y, k2.y) && !Sgn(k1.z, k2.z); }
 point operator + (point k1, point k2) { return (point){k1.x + k2.x, k1.y + k2.y, k1.z + k2.z}; }

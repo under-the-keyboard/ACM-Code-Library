@@ -1,39 +1,66 @@
-int Stack[maxn], low[maxn], dfn[maxn], inStack[maxn], belong[maxn];
-int now, len, cnt;
-// now:时间戳，len：栈的大小，cnt强连通的个数
-void init() {
-	now = len = cnt = 0;
-	mem(inStack, 0);
-	mem(belong, 0);
-	mem(dfn, 0);
-	mem(low, 0);
+// 强联通分量
+int dfn[maxn], low[maxn], Stack[maxn], inStack[maxn], belong[maxn], in[maxn], ts, cnt, len;
+void init(int n) {
+    for (int i = 1; i <= n; ++i) g[i].clear();
+    ts = cnt = len = 0;
+    fill(dfn, dfn+n+1, 0);
+    fill(inStack, inStack+n+1, 0);
 }
-void tarjan(int x) {
-    // 打上标记，入栈
-    low[x] = dfn[x] = ++now;
-    Stack[++len] = x;
-    inStack[x] = 1;
-    for (int i = 0; i < (int)g[x].size(); ++i) {
-        int y = g[x][i];
-		// 没有访问过，继续递归
-		// 在栈中表示可以形成一个强连通分量，更新根节点的low，继续找
-        if (!dfn[y]) tarjan(y), low[x] = min(low[x], low[y]);
-        else if (inStack[y]) low[x] = min(low[x], low[y]);
+void tarjan(int u) {
+    dfn[u] = low[u] = ++ts;
+    inStack[u] = 1;
+    Stack[len++] = u;
+    for (int i = 0; i < (int)g[u].size(); ++i) {
+        int v = g[u][i];
+        if (!dfn[v]) {
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+        }else if (inStack[v]) low[u] = min(low[u], dfn[v]);
     }
-	// 回溯，如果当前节点的dfn = low 表示栈中形成一个强连通分量
-    if (dfn[x] == low[x]) {
-        ++cnt; // 统计个数
-        int top;
-        while (Stack[len] != x) {
-            top = Stack[len--];
+    if (dfn[u] == low[u]) {
+        cnt++;
+        while (1) {
+            int top = Stack[--len];
             belong[top] = cnt;
-            inStack[top] = 0; 
+            inStack[top] = 0;
+            if (top == u) break;
         }
-        top = Stack[len--];
-        belong[top] = cnt; // 记录每个点的隶属关系
-        inStack[top] = 0;
     }
 }
 for (int i = 1; i <= n; ++i) {
-    if (!dfn[i])  tarjan(i);
+    if (dfn[i]) continue;
+    tarjan(i);
+}
+
+// 双连通分量
+vector<int> g[maxn];
+int dfn[maxn], low[maxn], Stack[maxn], inStack[maxn];
+int len, cnt, ts;
+void init(int n) {
+    len = cnt = ts = 0;
+    for (int i = 1; i <= n; ++i) g[i].clear();
+    fill(dfn, dfn+n+1, 0);
+}
+void tarjan(int u, int fa) {
+    dfn[u] = low[u] = ++ts;
+    Stack[len++] = u;
+    for (int i = 0; i < (int)g[u].size(); ++i) {
+        int v = g[u][i];
+        if (v == fa) continue;
+        if (!dfn[v]) {
+            // Stack[len++] = {u, v};
+            tarjan(v, u);
+            low[u] = min(low[u], low[v]);
+            if (dfn[u] <= low[v]) {
+                fill(inStack, inStack+n+1, 0);
+                inStack[u] = 1; 
+                while (1) {
+                    int top = Stack[--len];
+                    inStack[top] = 1; // 记录每次的连通分量中的点
+                    if (top == v) break; // top.u == u && top.v == top.v
+                }
+                // other check()
+            }
+        }else low[u] = min(low[u], dfn[v]);
+    }
 }

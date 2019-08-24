@@ -1,58 +1,58 @@
 // Kruskal
 int n, m;
 struct ac{
-	int u, v, w, flag;
-	bool operator <(ac t) {
-		return w < t.w;
-	}
+    int u, v, w, flag;
+    bool operator <(ac t) {
+        return w < t.w;
+    }
 }g[maxn*maxn];
 vector<int> son[maxn];
 int pre[maxn], dis[maxn][maxn];
 int find (int x) {
-	return (pre[x] == x) ? x : pre[x] = find(pre[x]);
+    return (pre[x] == x) ? x : pre[x] = find(pre[x]);
 }
 void Kruskal() {
-	for (int i = 0; i <= n; ++i) {
-		son[i].clear();
-		son[i].push_back(i);
-		pre[i] = i;
-	}
-	sort(g, g+m);
-	int sum = 0;
-	int cnt = 0;
-	for (int i = 0; i < m; ++i) {
-		if (cnt == n+1) break;
-		int fx = find(g[i].u);
-		int fy = find(g[i].v);
-		if (fx == fy) continue;
-		g[i].flag = 1;
-		sum += g[i].w;
-		cnt++;
-		int lenx = son[fx].size();
-		int leny = son[fy].size();
-		if (lenx < leny) {
-			swap(lenx, leny);
-			swap(fx, fy);
-		}
-		// 更新两点的距离最大值
-		for (int j = 0; j < lenx; ++j) {
-			for (int k = 0; k < leny; ++k) {
-				dis[son[fx][j]][son[fy][k]] = dis[son[fy][k]][son[fx][j]] = g[i].w; 
-			}
-		}
-		pre[fy] = fx;
-		//合并子树
-		for (int j = 0; j < leny; ++j) {
-			son[fx].push_back(son[fy][j]);
-		}
-		son[fy].clear();
-	}
-	int ans = inf;
-	for (int i = 0; i < m; ++i) {		
-		if (g[i].flag) continue;
-		ans = min(ans, sum + g[i].w - dis[g[i].u][g[i].v]);
-	}
-	printf("%d %d\n", sum, ans);
+    for (int i = 0; i <= n; ++i) {
+        son[i].clear();
+        son[i].push_back(i);
+        pre[i] = i;
+    }
+    sort(g, g+m);
+    int sum = 0;
+    int cnt = 0;
+    for (int i = 0; i < m; ++i) {
+        if (cnt == n+1) break;
+        int fx = find(g[i].u);
+        int fy = find(g[i].v);
+        if (fx == fy) continue;
+        g[i].flag = 1;
+        sum += g[i].w;
+        cnt++;
+        int lenx = son[fx].size();
+        int leny = son[fy].size();
+        if (lenx < leny) {
+            swap(lenx, leny);
+            swap(fx, fy);
+        }
+        // 更新两点的距离最大值
+        for (int j = 0; j < lenx; ++j) {
+            for (int k = 0; k < leny; ++k) {
+                dis[son[fx][j]][son[fy][k]] = dis[son[fy][k]][son[fx][j]] = g[i].w; 
+            }
+        }
+        pre[fy] = fx;
+        //合并子树
+        for (int j = 0; j < leny; ++j) {
+            son[fx].push_back(son[fy][j]);
+        }
+        son[fy].clear();
+    }
+    int ans = inf;
+    for (int i = 0; i < m; ++i) {       
+        if (g[i].flag) continue;
+        ans = min(ans, sum + g[i].w - dis[g[i].u][g[i].v]);
+    }
+    printf("%d %d\n", sum, ans);
 }
 // Prim
 int n, m;
@@ -96,7 +96,7 @@ void prim(int s) {
         } 
     }
     if (cnt != n-1) {
-    	puts("No way");
+        puts("No way");
     }
     int ans = inf;
     for (int i = 1; i <= n; ++i) {

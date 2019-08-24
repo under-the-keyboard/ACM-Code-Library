@@ -17,10 +17,10 @@ point p[maxn];
 std::set<point> set;
 bool operator < (point k1, point k2) {
   k1 = k1 - basic; k2 = k2 - basic;
-  db Ang1 = atan2(k1.y, k1.x), Ang2 = atan2(k2.y, k2.x);
-  db Len1 = GetLen(k1), Len2 = GetLen(k2);
-  if (Cmp(Ang1, Ang2) != 0) return Cmp(Ang1, Ang2) < 0;
-  return Cmp(Len1, Len2) < 0;
+  db ang1 = atan2(k1.y, k1.x), ang2 = atan2(k2.y, k2.x);
+  db len1 = GetLen(k1), len2 = GetLen(k2);
+  if (Cmp(ang1, ang2) != 0) return Cmp(ang1, ang2) < 0;
+  return Cmp(len1, len2) < 0;
 }
 std::set<point>::iterator Prev(std::set<point>::iterator k) {
   if (k == set.begin()) k = set.end();

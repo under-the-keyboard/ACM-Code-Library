@@ -7,69 +7,71 @@ int Cmp(db k1, db k2) { return Sgn(k1 - k2); }
 bool IsInMid(db k1, db k2, db k3) { return Sgn(k1 - k3) * Sgn(k2 - k3) <= 0; }
 db Max(db k1, db k2) { return Cmp(k1, k2) > 0 ? k1 : k2; }
 db Min(db k1, db k2) { return Cmp(k1, k2) < 0 ? k1 : k2; }
-struct point { db x, y; };
-bool operator == (point k1, point k2) { return !Cmp(k1.x, k2.x) && !Cmp(k1.y, k2.y); }
-point operator + (point k1, point k2) { return (point){k1.x + k2.x, k1.y + k2.y}; }
-point operator - (point k1, point k2) { return (point){k1.x - k2.x, k1.y - k2.y}; }
-point operator * (point k1, db k2) { return (point){k1.x * k2, k1.y * k2}; }
-point operator / (point k1, db k2) { return (point){k1.x / k2, k1.y / k2}; }
-db operator * (point k1, point k2) { return k1.x * k2.x + k1.y * k2.y; }
-db operator ^ (point k1, point k2) { return k1.x * k2.y - k1.y * k2.x; }
-bool IsInMid(point k1, point k2, point k3) { return IsInMid(k1.x, k2.x, k3.x) && IsInMid(k1.y, k2.y, k3.y); }
-db GetLen(point k) { return std::sqrt(k * k); }
-db GetLen2(point k) { return k * k; }
-point GetUnit(point k) { return k / GetLen(k); }
-db GetDis(point k1, point k2) { return GetLen(k2 - k1); }
-db GetDis2(point k1, point k2) { return GetLen2(k2 - k1); }
-db GetAng(point k1, point k2) { return std::atan2((k1 ^ k2), (k1 * k2)); }
-point Rotate(point k, db ang) { return (point){k.x * std::cos(ang) - k.y * std::sin(ang), k.x * std::sin(ang) + k.y + std::cos(ang)}; }
-point Rotate90(point k) { return (point){-k.y, k.x}; }
-struct line { point s, t; };
-struct seg: public line {}; // typedef line seg
-db GetLen(seg k) { return GetDis(k.s, k.t); }
-bool IsOn(point k1, seg k2) { return !Sgn((k1 - k2.s) ^ (k2.t - k2.s)) && Sgn((k1 - k2.s) * (k1 - k2.t)) <= 0; }
-point Proj(point k1, line k2) { point k = k2.t - k2.s; return k2.s + k * (((k1 - k2.s) * k) / GetLen(k)); }
-point Reflect(point k1, line k2) { return Proj(k1, k2) * 2 - k1; }
-bool IsParallel(line k1, line k2) { return !Sgn((k1.s - k1.t) ^ (k2.s - k2.t)); }
-bool IsInter(seg k1, seg k2) {
+struct Point { db x, y; };
+bool operator == (Point k1, Point k2) { return !Cmp(k1.x, k2.x) && !Cmp(k1.y, k2.y); }
+Point operator + (Point k1, Point k2) { return (Point){k1.x + k2.x, k1.y + k2.y}; }
+Point operator - (Point k1, Point k2) { return (Point){k1.x - k2.x, k1.y - k2.y}; }
+Point operator * (Point k1, db k2) { return (Point){k1.x * k2, k1.y * k2}; }
+Point operator / (Point k1, db k2) { return (Point){k1.x / k2, k1.y / k2}; }
+db operator * (Point k1, Point k2) { return k1.x * k2.x + k1.y * k2.y; }
+db operator ^ (Point k1, Point k2) { return k1.x * k2.y - k1.y * k2.x; }
+bool IsInMid(Point k1, Point k2, Point k3) { return IsInMid(k1.x, k2.x, k3.x) && IsInMid(k1.y, k2.y, k3.y); }
+db GetLen(Point k) { return std::sqrt(k * k); }
+db GetLen2(Point k) { return k * k; }
+Point GetUnit(Point k) { return k / GetLen(k); }
+db GetDis(Point k1, Point k2) { return GetLen(k2 - k1); }
+db GetDis2(Point k1, Point k2) { return GetLen2(k2 - k1); }
+db GetAng(Point k1, Point k2) { return std::atan2((k1 ^ k2), (k1 * k2)); }
+Point Rotate(Point k, db ang) { return (Point){k.x * std::cos(ang) - k.y * std::sin(ang), k.x * std::sin(ang) + k.y + std::cos(ang)}; }
+Point Rotate90(Point k) { return (Point){-k.y, k.x}; }
+struct Line { Point s, t; };
+struct Seg: public Line {}; // typedef Line Seg
+db GetLen(Seg k) { return GetDis(k.s, k.t); }
+bool IsOn(Point k1, Seg k2) { return !Sgn((k1 - k2.s) ^ (k2.t - k2.s)) && Sgn((k1 - k2.s) * (k1 - k2.t)) <= 0; }
+Point Proj(Point k1, Line k2) { Point k = k2.t - k2.s; return k2.s + k * (((k1 - k2.s) * k) / GetLen(k)); }
+Point Reflect(Point k1, Line k2) { return Proj(k1, k2) * 2 - k1; }
+bool IsParallel(Line k1, Line k2) { return !Sgn((k1.s - k1.t) ^ (k2.s - k2.t)); }
+bool IsInter(Seg k1, Seg k2) {
   return
-    Max(k1.s.x, k1.t.x) >= Min(k2.s.x, k2.t.x) &&
-    Max(k2.s.x, k2.t.x) >= Min(k1.s.x, k1.t.x) &&
-    Max(k1.s.y, k1.t.y) >= Min(k2.s.y, k2.t.y) &&
-    Max(k2.s.y, k2.t.y) >= Min(k1.s.y, k1.t.y) &&
+    Cmp(Max(k1.s.x, k1.t.x), Min(k2.s.x, k2.t.x)) >= 0 &&
+    Cmp(Max(k2.s.x, k2.t.x), Min(k1.s.x, k1.t.x)) >= 0 &&
+    Cmp(Max(k1.s.y, k1.t.y), Min(k2.s.y, k2.t.y)) >= 0 &&
+    Cmp(Max(k2.s.y, k2.t.y), Min(k1.s.y, k1.t.y)) >= 0 &&
     Sgn((k2.s - k1.t) ^ (k1.s - k1.t)) * Sgn((k2.t - k1.t) ^ (k1.s - k1.t)) <= 0 &&
     Sgn((k1.s - k2.t) ^ (k2.s - k2.t)) * Sgn((k1.t - k2.t) ^ (k2.s - k2.t)) <= 0;
 }
-bool IsInter(line k1, seg k2) {
+bool IsInter(Line k1, Seg k2) {
   return Sgn((k2.s - k1.t) ^ (k1.s - k1.t)) * Sgn((k2.t - k1.t) ^ (k1.s - k1.t)) <= 0;
 }
-bool IsInter(line k1, line k2) {
+bool IsInter(Line k1, Line k2) {
   if (!IsParallel(k1, k2)) return true;
   return !Sgn((k1.s - k2.s) ^ (k2.t - k2.s));
 }
-db GetDis(point k1, line k2) {
-  point k = Proj(k1, k2);
-  return GetDis(k1, k);
+db GetDis(Point k1, Line k2) {
+  return std::fabs((k1 - k2.s) ^ (k2.t - k2.s)) / GetLen(k2);
 }
-db GetDis(point k1, seg k2) {
-  point k = Proj(k1, k2);
-  if (IsInMid(k2.s, k2.t, k)) return GetDis(k1, k);
-  return Min(GetDis(k1, k2.s), GetDis(k1, k2.t));
+db GetDis(Point k1, Seg k2) {
+  if (Sgn((k1 - k2.s) * (k2.t - k2.s)) < 0 || Sgn((k1 - k2.t) * (k2.s - k2.t)) < 0) return Min(GetDis(k1, k2.s), GetDis(k1, k2.t));
+  return GetDis(k1, k2);
 }
-point Cross(line k1, line k2) {
+db GetDis(Seg k1, Seg k2) {
+  if (IsInter(k1, k2)) return 0.;
+  else return Min(Min(GetDis(k1.s, k2), GetDis(k1.t, k2)), Min(GetDis(k1, k2.s), GetDis(k1, k2.t)));
+}
+Point Cross(Line k1, Line k2) {
   db w1 = (k1.s - k2.s) ^ (k2.t - k2.s), w2 = (k2.t - k2.s) ^ (k1.t - k2.s);
   return (k1.s * w2 + k1.t * w1) / (w1 + w2);
 }
 // 平面直线图(PSLG)
-struct edge { int u, v; db ang; };
+struct Edge { int u, v; db ang; };
 struct PSLG {
   int n, m, face_cnt; // 多边形数
-  point p[maxn];
-  std::vector<edge> e;
+  Point p[maxn];
+  std::vector<Edge> e;
   std::vector<int> g[maxn];
   bool vis[maxn * 2];
   int left[maxn * 2], prev[maxn * 2];
-  std::vector<polygon> faces; // 多边形
+  std::vector<Polygon> faces; // 多边形
   db area[maxn]; // 多边形面积
   void Init() {
     n = m = 0;
@@ -78,12 +80,12 @@ struct PSLG {
     faces.clear();
   }
   // 有向线段pt.x->pt.y的极角
-  db GetAng(point pt) {
+  db GetAng(Point pt) {
     return std::atan2(pt.y, pt.x);
   }
   void AddEdge(int u, int v) {
-    e.push_back((edge){u, v, GetAng(p[v] - p[u])});
-    e.push_back((edge){v, u, GetAng(p[u] - p[v])});
+    e.push_back((Edge){u, v, GetAng(p[v] - p[u])});
+    e.push_back((Edge){v, u, GetAng(p[u] - p[v])});
     m = e.size();
     g[u].push_back(m - 2);
     g[v].push_back(m - 1);
@@ -106,7 +108,7 @@ struct PSLG {
         // 卷包裹逆时针找圈
         if (!vis[v]) {
           ++face_cnt;
-          polygon poly;
+          Polygon poly;
           while (true) {
             vis[v] = 1;
             left[v] = face_cnt;
@@ -123,15 +125,15 @@ struct PSLG {
     for (int i = 0; i < face_cnt; ++i) area[i] = GetArea(faces[i]);
   }
 };
-struct circle { point o; db r; };
+struct Circle { Point o; db r; };
 // 切点
-std::vector<point> TagentCP(circle k1, point k2) {
+std::vector<Point> TagentCP(Circle k1, Point k2) {
   db a = GetLen(k2 - k1.o), b = k1.r * k1.r / a, c = std::sqrt(Max(0., k1.r * k1.r - b * b));
-  point k = GetUnit(k2 - k1.o), m = k1.o + k * b, del = Rotate90(k) * c;
+  Point k = GetUnit(k2 - k1.o), m = k1.o + k * b, del = Rotate90(k) * c;
   return {m - del, m + del};
 }
 // 公切线数量
-int CheckPosCC(circle k1, circle k2) {
+int CheckPosCC(Circle k1, Circle k2) {
   if (Cmp(k1.r, k2.r) == -1) std::swap(k1, k2);
   double dis = k1.o.Dis(k2.o);
   int w1 = Cmp(dis, k1.r + k2.r), w2 = Cmp(dis, k1.r - k2.r);
@@ -142,24 +144,24 @@ int CheckPosCC(circle k1, circle k2) {
   return 0;
 }
 // 交点
-std::vector<point> GetCC(circle k1, circle k2) {
+std::vector<Point> GetCC(Circle k1, Circle k2) {
   int pd = CheckPosCC(k1, k2);
   if (pd == 0 || pd == 4) return {};
   double a = (k2.o - k1.o).Abs2();
   double cosA = (k1.r * k1.r + a - k2.r * k2.r) / (2 * k1.r * sqrt(std::max(a, 0.0)));
   double b = k1.r * cosA, c = sqrt(std::max(0.0, k1.r * k1.r - b * b));
-  point k = (k2.o - k1.o).Unit(), m = k1.o + k * b, del = k.Turn90() * c;
+  Point k = (k2.o - k1.o).Unit(), m = k1.o + k * b, del = k.Turn90() * c;
   return {m - del, m + del};
 }
-circle GetCircle(point k1, point k2, point k3) {
+Circle GetCircle(Point k1, Point k2, Point k3) {
   db a1 = k2.x - k1.x, b1 = k2.y - k1.y, c1 = (a1 * a1 + b1 * b1) * 0.5;
   db a2 = k3.x - k1.x, b2 = k3.y - k1.y, c2 = (a2 * a2 + b2 * b2) * 0.5;
   db d = a1 * b2 - a2 * b1;
-  point o = (point){k1.x + (c1 * b2 - c2 * b1) / d, k1.y + (a1 * c2 - a2 * c1) / d};
-  return (circle){o, GetDis(k1, o)};
+  Point o = (Point){k1.x + (c1 * b2 - c2 * b1) / d, k1.y + (a1 * c2 - a2 * c1) / d};
+  return (Circle){o, GetDis(k1, o)};
 }
-db GetMinCircleR(std::vector<point> p) {
-  point cur = p[0];
+db GetMinCircleR(std::vector<Point> p) {
+  Point cur = p[0];
   db pro = 10000, ret = inf;
   while (Sgn(pro) > 0) {
     int idx = 0;
@@ -173,12 +175,12 @@ db GetMinCircleR(std::vector<point> p) {
   }
   return ret;
 }
-circle GetMinCircle(std::vector<point> p) {
+Circle GetMinCircle(std::vector<Point> p) {
   std::random_shuffle(p.begin(), p.end());
-  circle ret = (circle){p[0], 0.};
+  Circle ret = (Circle){p[0], 0.};
   for (int i = 1; i < p.size(); ++i) {
     if (Cmp(GetDis(ret.o, p[i]), ret.r) <= 0) continue;
-    ret = (circle){p[i], 0.};
+    ret = (Circle){p[i], 0.};
     for (int j = 0; j < i; ++j) {
       if (Cmp(GetDis(ret.o, p[j]), ret.r) <= 0) continue;
       ret.o = (p[i] + p[j]) * 0.5;
@@ -191,16 +193,16 @@ circle GetMinCircle(std::vector<point> p) {
   }
   return ret;
 }
-typedef std::vector<point> polygon;
-db GetArea(polygon &poly) {
+typedef std::vector<Point> Polygon;
+db GetArea(Polygon &poly) {
   db ret = 0.;
   for (int i = 0; i < poly.size(); ++i) ret += poly[i] ^ poly[(i + 1) % poly.size()];
   return ret * 0.5;
 }
-polygon GrahamScan(std::vector<point> p) {
-  polygon ret;
+Polygon GrahamScan(std::vector<Point> p) {
+  Polygon ret;
   if (p.size() < 3) {
-    for (point &v : p) ret.push_back(v);
+    for (Point &v : p) ret.push_back(v);
     return ret;
   }
   int idx = 0;
@@ -209,7 +211,7 @@ polygon GrahamScan(std::vector<point> p) {
       idx = i;
   std::swap(p[0], p[idx]);
   std::sort(p.begin() + 1, p.end(),
-    [&](const point &k1, const point &k2) {
+    [&](const Point &k1, const Point &k2) {
       db tmp = (k1 - p[0]) ^ (k2 - p[0]);
       if (Sgn(tmp) > 0) return true;
       else if (!Sgn(tmp) && Cmp(GetDis(k1, p[0]), GetDis(k2, p[0])) <= 0) return true;
@@ -223,26 +225,26 @@ polygon GrahamScan(std::vector<point> p) {
   }
   return ret;
 }
-bool IsIn(point p, const polygon &ch) {
-  point base = ch[0];
+bool IsIn(Point p, const Polygon &ch) {
+  Point base = ch[0];
   if (Sgn((p - base) ^ (ch[1] - p)) > 0 || Sgn((p - base) ^ (ch.back() - base)) < 0) return false;
   if (!Sgn((p - base) ^ (ch[1] - p)) && Cmp(GetLen(p - base), GetLen(ch[1] - base)) <= 0) return true;
   int idx = std::lower_bound(ch.begin(), ch.end(), p,
-    [&](const point &k1, const point &k2) {
+    [&](const Point &k1, const Point &k2) {
       return Sgn((k1 - base) ^ (k2 - base)) > 0;
     }
   ) - ch.begin() - 1;
   return Sgn((ch[idx + 1] - ch[idx]) ^ (p - ch[idx])) >= 0;
 }
-polygon Minkowski(const polygon &k1, const polygon &k2) {
+Polygon Minkowski(const Polygon &k1, const Polygon &k2) {
   int sz1 = k1.size(), sz2 = k2.size();
-  std::queue<point> buf1, buf2;
+  std::queue<Point> buf1, buf2;
   for (int i = 0; i < sz1; ++i) buf1.push(k1[(i + 1) % sz1] - k1[i]);
   for (int i = 0; i < sz2; ++i) buf2.push(k2[(i + 1) % sz2] - k2[i]);
-  polygon ret;
+  Polygon ret;
   ret.push_back(k1[0] + k2[0]);
   while (!buf1.empty() && !buf2.empty()) {
-    point tmp1 = buf1.front(), tmp2 = buf2.front();
+    Point tmp1 = buf1.front(), tmp2 = buf2.front();
     if (Sgn(tmp1 ^ tmp2) > 0) {
       ret.push_back(ret.back() + tmp1);
       buf1.pop();
@@ -262,7 +264,7 @@ polygon Minkowski(const polygon &k1, const polygon &k2) {
   }
   return GrahamScan(ret);
 }
-db RotateCaliper(polygon p) {
+db RotateCaliper(Polygon p) {
   db ret = -inf;
   if (p.size() == 3) {
     ret = Max(ret, GetDis(p[0], p[1]));

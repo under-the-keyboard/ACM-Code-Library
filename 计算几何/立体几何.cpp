@@ -7,21 +7,21 @@ int Sgn(db k) { return std::fabs(k) < eps ? 0 : (k < 0 ? -1 : 1); }
 int Cmp(db k1, db k2) { return Sgn(k1 - k2); }
 db Min(db k1, db k2) { return Cmp(k1, k2) < 0 ? k1 : k2; }
 db Max(db k1, db k2) { return Cmp(k1, k2) > 0 ? k1 : k2; }
-struct point { db x, y, z; }
-bool operator == (point k1, point k2) { return !Sgn(k1.x - k2.x) && !Sgn(k1.y, k2.y) && !Sgn(k1.z, k2.z); }
-point operator + (point k1, point k2) { return (point){k1.x + k2.x, k1.y + k2.y, k1.z + k2.z}; }
-point operator - (point k1, point k2) { return (point){k1.x - k2.x, k1.y - k2.y, k1.z - k2.z}; 
-point operator * (point k1, db k2) { return (point){k1.x * k2, k1.y * k2, k1.z * k2};  }
-point operator / (point k1, db k2) { return (point){k1.x / k2, k1.y / k2, k1.z / k2};  }
-db operator * (point k1, point k2) { k1.x * k2.x + k1.y * k2.y + k1.z * k2.z; }
-point operator ^ (point k1, point k2) { return (point){k1.y * k2.z - k1.z * k2.y, k1.z * k2.x - k1.x * k2.z, k1.x * k2.y - k1.y * k2.x}; }
-db GetLen(point k) { return std::sqrt(k * k); }
-db GetLen2(point k) { return k * k; }
-point GetUnit(point k) { return k / GetLen(k); }
-db GetDis(point k1, point k2) { return GetLen(k2 - k1); }
-db GetDis2(point k1, point k2) { return GetLen2(k2 - k1); }
-db GetMinSphereR(std::vector<point> p) {
-  point cur = p[0];
+struct Point { db x, y, z; }
+bool operator == (Point k1, Point k2) { return !Sgn(k1.x - k2.x) && !Sgn(k1.y, k2.y) && !Sgn(k1.z, k2.z); }
+Point operator + (Point k1, Point k2) { return (Point){k1.x + k2.x, k1.y + k2.y, k1.z + k2.z}; }
+Point operator - (Point k1, Point k2) { return (Point){k1.x - k2.x, k1.y - k2.y, k1.z - k2.z}; 
+Point operator * (Point k1, db k2) { return (Point){k1.x * k2, k1.y * k2, k1.z * k2};  }
+Point operator / (Point k1, db k2) { return (Point){k1.x / k2, k1.y / k2, k1.z / k2};  }
+db operator * (Point k1, Point k2) { k1.x * k2.x + k1.y * k2.y + k1.z * k2.z; }
+Point operator ^ (Point k1, Point k2) { return (Point){k1.y * k2.z - k1.z * k2.y, k1.z * k2.x - k1.x * k2.z, k1.x * k2.y - k1.y * k2.x}; }
+db GetLen(Point k) { return std::sqrt(k * k); }
+db GetLen2(Point k) { return k * k; }
+Point GetUnit(Point k) { return k / GetLen(k); }
+db GetDis(Point k1, Point k2) { return GetLen(k2 - k1); }
+db GetDis2(Point k1, Point k2) { return GetLen2(k2 - k1); }
+db GetMinSphereR(std::vector<Point> p) {
+  Point cur = p[0];
   db pro = 10000, ret = inf;
   while (pro > eps) {
     int idx = 0;
@@ -35,19 +35,19 @@ db GetMinSphereR(std::vector<point> p) {
   }
   return ret;
 }
-struct line { point s, t; };
-struct seg: public line {};
-db GetLen(seg k) { return GetDis(k.s, k.t); }
-db GetLen2(seg k) { return GetDis2(k.s, k.t); }
-db GetDis(point k1, line k2) { return std::fabs((k1 - k2.s) ^ (k2.t - k2.s)) / GetLen(k2); }
-db GetDis(point k1, seg k2) {
+struct Line { Point s, t; };
+struct Seg: public Line {};
+db GetLen(Seg k) { return GetDis(k.s, k.t); }
+db GetLen2(Seg k) { return GetDis2(k.s, k.t); }
+db GetDis(Point k1, Line k2) { return std::fabs((k1 - k2.s) ^ (k2.t - k2.s)) / GetLen(k2); }
+db GetDis(Point k1, Seg k2) {
   if (Sgn((k1 - k2.s) * (k2.t - k2.s)) < 0 || Sgn((k1 - k2.t) * (k2.s - k2.t)) < 0)
     return Min(GetDis(k1, k2.s), GetDis(k1, k2.t));
-  return GetDis(k1, seg); // point to line dis
+  return GetDis(k1, Seg); // Point to Line dis
 }
-struct sphere { point o; db r; };
-db GetV(sphere k) { return 4. / 3. * pi * k.r * k.r * k.r; }
-db GetInterV(sphere k1, sphere k2) {
+struct Sphere { Point o; db r; };
+db GetV(Sphere k) { return 4. / 3. * pi * k.r * k.r * k.r; }
+db GetInterV(Sphere k1, Sphere k2) {
   db dis = GetDisP2P(k1.o, k2.o);
   if (Sgn(dis - k1.r - k2.r) >= 0) return ret;
   if (Sgn(k2.r - (dis + k1.r)) >= 0) return GetV(k1);

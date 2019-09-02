@@ -22,7 +22,7 @@ inline void print(__int128 x){
         print(x/10);
     putchar(x%10+'0');
 }
-int main(void){
+int main(){
     __int128 a = read();
     __int128 b = read();
     print(a + b);

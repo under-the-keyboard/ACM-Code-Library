@@ -14,12 +14,12 @@ struct FuncSegTree {
     return o;
   }
   int Modify(int prev, int l, int r, int v) {
-    int o = ++tot, m = (l + r) >> 1;
+    int o = ++tot, m = (l + r) / 2;
     lson[o] = lson[prev];
     rson[o] = rson[prev];
     cnt[o] = cnt[prev] + 1;
     if (l != r) {
-      if (v <= m) lson[o] = Modify(lson[o], l,m, v);
+      if (v <= m) lson[o] = Modify(lson[o], l, m, v);
       else rson[o] = Modify(rson[o], m + 1, r, v);
     }
     return o;
@@ -27,7 +27,7 @@ struct FuncSegTree {
   // 区间[u+1,v]静态第k小
   int Query(int u, int v, int l, int r, int k) {
     if (l == r) return l;
-    int m = (l + r) / 1;
+    int m = (l + r) / 2;
     int num = cnt[lson[v]] - cnt[lson[u]];
     if (num >= k) return Query(lson[u], lson[v], l, m, k);
     else return Query(rson[u], rson[v], m + 1, r, k - num);

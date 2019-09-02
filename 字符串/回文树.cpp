@@ -1,7 +1,7 @@
 struct Palindrome_Tree{
     int nex[maxn][26];
     int fail[maxn], cnt[maxn], num[maxn]; // num 记录每个节点右端点的表示回文串的个数
-    int len[maxn], S[maxn];					// cnt 记录每个节点表示的回文串出现的次数
+    int len[maxn], S[maxn];                 // cnt 记录每个节点表示的回文串出现的次数
     int last, n, p;
     int newnode(int l) { // 新建节点
         for (int i = 0; i < 26; ++i) nex[p][i] = 0;
@@ -32,6 +32,10 @@ struct Palindrome_Tree{
         }
         last = nex[cur][c];
         cnt[last]++;
+    }
+    void build(char *buf, int lens) {
+        init();
+        for (int i = 0; i < lens; ++i) add(buf[i]);
     }
     void count() { // 求cnt
         for (int i = p - 1; i >= 0; --i) cnt[fail[i]] += cnt[i];

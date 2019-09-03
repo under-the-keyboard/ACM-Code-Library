@@ -5,14 +5,14 @@ int Get(int k) {
   return std::lower_bound(x.begin(), x.end(), k) - x.begin();
 }
 struct SegTree {
-  struct node {
+  struct Node {
     int v, lazy;
-    node() { v = lazy = 0; }
+    Node() { v = lazy = 0; }
   };
   int n;
-  std::vector<node> tree;
-  node Unite(const node &k1, const node &k2) {
-    node ans;
+  std::vector<Node> tree;
+  Node Unite(const Node &k1, const Node &k2) {
+    Node ans;
     ans.v = k1.v + k2.v;
     return ans;
   }
@@ -55,17 +55,17 @@ struct SegTree {
   void Modify(int ll, int rr) {
     Modify(1, 1, n, ll, rr);
   }
-  node Query(int o, int l, int r, int ll, int rr) {
+  Node Query(int o, int l, int r, int ll, int rr) {
     if (ll <= l && rr >= r) return tree[o];
     Push(o, l, r);
     int m = (l + r) / 2;
-    node ans;
+    Node ans;
     if (ll <= m) ans = Unite(ans, Query(o * 2, l, m, ll, rr));
     if (rr > m) ans = Unite(ans, Query(o * 2 + 1, m + 1, r, ll, rr));
     Pull(o);
     return ans;
   }
-  node Query() {
+  Node Query() {
     return Query(1, 1, n, 1, n);
   }
 };

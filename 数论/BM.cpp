@@ -139,7 +139,7 @@ namespace Math {
         }
         return res;
     }
-    inline int inv(int x) { return pw(x, mod - 2); }
+    inline int inv(int x) { return pw(x, mod-2); }
 }
 inline void reduce(int &x) { x += x >> 31 & mod; }
  

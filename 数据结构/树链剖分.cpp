@@ -18,7 +18,7 @@ void Dfs1(int u, int p, int d) {
     if (sz[v] > sz[son[u]]) son[u] = v;
   }
 }
-Dfs2(int u, int tp) {
+void Dfs2(int u, int tp) {
   top[u] = tp;
   id[u] = ++dfs_clock;
   rk[dfs_clock] = u;

@@ -45,6 +45,7 @@ def work():
 def run():
     os.system("xelatex -synctex=1 -interaction=nonstopmode under_the_keyboard-code-library.tex")
     os.system("xelatex -synctex=1 -interaction=nonstopmode under_the_keyboard-code-library.tex")
+    os.system("xelatex -synctex=1 -interaction=nonstopmode under_the_keyboard-code-library.tex")
     os.system("del *.log *.gz *.aux *.toc *.tex")
 
 def main():

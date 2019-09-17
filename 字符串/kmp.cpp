@@ -13,7 +13,7 @@ struct KMP{ // 下标0
         get_nex(buf2, len2);
         int cnt = 0, i = 0, j = 0;
         while (i < len1) {
-            if (j == -1 || buf1[i] == buf2[i]) ++i, ++j;
+            if (j == -1 || buf1[i] == buf2[j]) ++i, ++j;
             else j = nex[j];
             if (j == len2) cnt++, j = nex[j];
         }

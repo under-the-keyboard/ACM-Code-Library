@@ -1,6 +1,7 @@
 double Com(double X) {
     return sqrt((X - x) * (X - x) + (a * X * X + b * X + c - y) * (a * X * X + b * X + c - y));
 }
+
 void Binary(double l, double r) {
     if(l + eps <= r) {
         double lm, rm;
@@ -16,3 +17,4 @@ void Binary(double l, double r) {
         else Binary(lm, r);
     }
 }
+

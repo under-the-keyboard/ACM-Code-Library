@@ -1,6 +1,13 @@
 struct Hash{
-    // mod 402653189，805306457，1610612741，1e9+7
-    // base 131, 233
+/*  mod
+    53,         97,         	193,         389,       769,
+    1543,       3079,         	6151,        12289,     24593,
+    49157,      98317,        	196613,      393241,    786433,
+    1572869,    3145739,      	6291469,     12582917,  25165843,
+    50331653,   100663319,	201326611,   402653189, 805306457, 
+    1610612741,	3221225473,	4294967291, 23333333333333333
+    base 131 233
+*/
     long long p[maxn], hash[maxn], base = 131;
     long long getHash(int l, int r) {
         long long ans = (hash[r] - hash[l-1] * p[r-l+1]) % mod;
@@ -15,3 +22,8 @@ struct Hash{
         }
     }
 }hash;
+long long mul(long long x, long long y, long long mod) {
+    x %= mod; y %= mod;
+    long long tmp = (long long)((long double)x*y/mod+1e-8)*mod;
+    return (x*y-tmp+mod)%mod;
+}

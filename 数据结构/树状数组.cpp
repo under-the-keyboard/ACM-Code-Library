@@ -1,5 +1,5 @@
 const int maxn = "Edit";
-struct BitTree {
+struct BIT {
   int tree[maxn];
   void Init() {
     memset(tree, 0, sizeof(tree));

@@ -4,6 +4,7 @@ void init(int n) {
     for (int i = 1; i <= n; ++i) g[i].clear();
     ts = cnt = len = 0;
     fill(dfn, dfn+n+1, 0);
+    fill(in, in+n+1, 0);
     fill(inStack, inStack+n+1, 0);
 }
 void tarjan(int u) {
@@ -31,7 +32,6 @@ for (int i = 1; i <= n; ++i) {
     if (dfn[i]) continue;
     tarjan(i);
 }
-
 // 双连通分量
 vector<int> g[maxn];
 int dfn[maxn], low[maxn], Stack[maxn], inStack[maxn];

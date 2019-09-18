@@ -96,3 +96,18 @@ struct LB{
     }
 
 };
+//类似高斯消元，如果第j位部位0，那么
+//就把这一位当成基，并把其他消掉
+for (int i = 1; i <= n; i ++) 
+        for (int j = 1; j <= m; j ++) 
+            if(fabs(x[i].value[j]) > eps) {
+                if(!lb[j]) {
+                    lb[j] = i;
+                    break;
+                }else {
+                    double t = x[i].value[j] / x[lb[j]].value[j];
+                    for (int k = j; k <= m; k ++) 
+                        x[i].value[k] -= x[lb[j]].value[k] * t;
+                }
+            }
+        

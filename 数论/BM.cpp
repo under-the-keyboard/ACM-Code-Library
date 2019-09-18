@@ -121,14 +121,14 @@ int main() {
     solve();
     return 0;
 }
-//另一个板子
+//anothers
 #include<bits/stdc++.h>
 #define maxk 100005
 #define maxn 200005
 const int mod = 998244353;
  
 #define mul(x, y) static_cast<long long> (x) * (y) % mod
- 
+
 namespace Math {
     inline int pw(int base, int p) {
         static int res; res = 1;
@@ -142,7 +142,7 @@ namespace Math {
     inline int inv(int x) { return pw(x, mod-2); }
 }
 inline void reduce(int &x) { x += x >> 31 & mod; }
- 
+
 namespace Poly {
 #define N maxn
     int lim, s, rev[N], Wn[N];

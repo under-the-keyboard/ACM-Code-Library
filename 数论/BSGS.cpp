@@ -1,9 +1,11 @@
 map<long long, long long> Hash;
+
 long long Mul(long long a, long long b, long long p) {
     long long L = a * (b >> 25LL) % p * (1LL << 25) % p;
     long long R = a * (b & ((1LL << 25) - 1)) % p;
     return (L + R) % p;
 }
+
 long long Pow(long long a, long long b, long long p) {
     a %= p;
     long long res = 1;
@@ -16,8 +18,6 @@ long long Pow(long long a, long long b, long long p) {
 }
 /*
 get ans for a^ans = b % p
-A^{iS-j} =B mod p  A^{iS} = B*A^{j} mod p    
-A^{iS+j} = B mod p
 */
 long long BSGS(long long a, long long b, long long p) {
     long long m = sqrt(p) + 1;
@@ -32,3 +32,10 @@ long long BSGS(long long a, long long b, long long p) {
             return i * m - Hash[k];
     }
 }
+
+/*
+A^{iS-j} =B mod p
+A^{iS} = B*A^{j} mod p
+
+A^{iS+j} = B mod p
+*/

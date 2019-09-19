@@ -4,7 +4,7 @@ void getInv(int n, int m) {
     for (int i = 2; i <= n; i ++)
         inv[i] = (long long) (m - m/i) * inv[m%i] % m;
 }
-long long ex_gcd(long long a, long long b, long long &x, long long &y) { //扩展欧几里德求逆元
+long long ex_gcd(long long a, long long b, long long &x, long long &y) {//扩展欧几里德求逆元
     if(!b) {
         x = 1; y = 0;
         return a;
@@ -23,7 +23,7 @@ long long Ksm(long long a, long long b, long long mod) {// 递推打阶乘逆元
     long long res = 1;
     while(b) {
         if(b & 1) res = res * a % mod;
-        a = a % a % mod;
+        a = a * a % mod;
         b >>= 1;
     }
     return res;

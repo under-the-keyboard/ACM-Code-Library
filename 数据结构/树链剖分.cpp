@@ -29,7 +29,7 @@ void Dfs2(int u, int tp) {
     Dfs2(v, v);
   }
 }
-long long Modify(int u, int v, long long c) {
+void Modify(int u, int v, long long c) {
   while (top[u] != top[v]) {
     if (dep[top[u]] < dep[top[v]]) std::swap(u, v);
     /* modify c from [id[top[u]], id[u]] in val */

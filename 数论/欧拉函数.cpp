@@ -9,6 +9,7 @@ int getPhi(int n) {
     if(n > 1) rea = rea - rea / n;
     return rea;
 }
+
 int phi[maxn];//递推
 void getPhi() {
     for (int i = 1; i < maxn; i ++)

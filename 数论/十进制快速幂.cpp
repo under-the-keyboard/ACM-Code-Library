@@ -1,4 +1,4 @@
-const int maxn = 1e6 + 5; //矩阵
+const int maxn = 1e6 + 5;
 long long mod;
 struct Matrix{
     long long mat[2][2];

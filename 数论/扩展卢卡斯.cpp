@@ -58,8 +58,7 @@ long long C(long long n, long long m, long long pi, long long pk) {
     long long ans = mul(mul(a, b, pk), c, pk);
     return mul(ans, Pow(pi, r, pk), pk);
 }
-long long ex_lucas(long long n, long long m, long long P) {
-//C_n^m %p
+long long ex_lucas(long long n, long long m, long long P) {//C_n^m %p
     long long ans = 0;
     long long p = P;
     for (int i = 2; i <= P; i ++) {

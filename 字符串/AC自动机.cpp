@@ -2,9 +2,7 @@ struct Trie{
     int nex[maxn][26], fail[maxn], end[maxn];
     int root, p;
     inline int newnode() {
-        for (int i = 0; i < 26; ++i) {
-            nex[p][i] = -1;
-        }
+        for (int i = 0; i < 26; ++i) nex[p][i] = -1;
         end[p++] = 0;
         return p - 1;
     }
@@ -15,8 +13,7 @@ struct Trie{
     inline void insert(char *buf) {
         int now = root;
         for (int i = 0; buf[i]; ++i) {
-            if (nex[now][buf[i]-'a'] == -1) 
-                nex[now][buf[i]-'a'] = newnode();
+            if (nex[now][buf[i]-'a'] == -1) nex[now][buf[i]-'a'] = newnode();
             now = nex[now][buf[i]-'a'];
         }
         end[now]++;
@@ -25,8 +22,7 @@ struct Trie{
         queue<int> que;
         fail[root] = root;
         for (int i = 0; i < 26; ++i) {
-            if (nex[root][i] == -1)
-                nex[root][i] = root;
+            if (nex[root][i] == -1) nex[root][i] = root;
             else {
                 fail[nex[root][i]] = root;
                 que.push(nex[root][i]);
@@ -36,8 +32,7 @@ struct Trie{
             int now = que.front();
             que.pop();
             for (int i = 0; i < 26; ++i) {
-                if (nex[now][i] == -1) 
-                    nex[now][i] = nex[fail[now]][i];
+                if (nex[now][i] == -1) nex[now][i] = nex[fail[now]][i];
                 else {
                     fail[nex[now][i]] = nex[fail[now]][i];
                     que.push(nex[now][i]);

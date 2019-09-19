@@ -1,4 +1,4 @@
-\documentclass[twocolumn]{article}
+\documentclass{article}
 \usepackage{ctex}
 \usepackage{graphicx}
 \usepackage{fontspec}
@@ -6,8 +6,10 @@
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage{geometry}
 
-\setlength{\columnsep}{2em}
+\geometry{a4paper,scale=0.8}
+
 \lstset{breaklines}
 \lstset{extendedchars=false}
 \definecolor{keywordcolor}{rgb}{0.8,0.1,0.5}

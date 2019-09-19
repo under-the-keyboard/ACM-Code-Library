@@ -52,7 +52,7 @@ struct LB{
         if(k == 0) return 0;
         long long res = 0;
         if(k >= (1ll << tot)) return -1;
-        for (int i = 34; i >= 0; i --) 
+        for (int i = 34; i >= 0; i --)
             if(k & (1ll << i)) res ^= nb[i];
         return res;
     }
@@ -87,16 +87,15 @@ struct LB{
 };
 //类似高斯消元，如果第j位部位0，那么
 //就把这一位当成基，并把其他消掉
-for (int i = 1; i <= n; i ++) 
-        for (int j = 1; j <= m; j ++) 
-            if(fabs(x[i].value[j]) > eps) {
-                if(!lb[j]) {
-                    lb[j] = i;
-                    break;
-                }else {
-                    double t = x[i].value[j] / x[lb[j]].value[j];
-                    for (int k = j; k <= m; k ++) 
-                        x[i].value[k] -= x[lb[j]].value[k] * t;
-                }
+for (int i = 1; i <= n; i ++)
+    for (int j = 1; j <= m; j ++)
+        if(fabs(x[i].value[j]) > eps) {
+            if(!lb[j]) {
+                lb[j] = i;
+                break;
+            }else {
+                double t = x[i].value[j] / x[lb[j]].value[j];
+                for (int k = j; k <= m; k ++)
+                    x[i].value[k] -= x[lb[j]].value[k] * t;
             }
-        
+        }

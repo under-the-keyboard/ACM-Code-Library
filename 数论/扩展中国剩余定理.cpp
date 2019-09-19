@@ -44,3 +44,17 @@ long long exCrt() {
     }
     return C[n];
 }
+ll exCrt(ll *c_, ll *m_, int n) {// a,m from 1~n
+    ll x, y, k;
+    ll M = m_[1], ans = c_[1];
+    for (int i = 2; i <= n; i ++) {
+        ll a = M, b = m_[i], c = (c_[i] - ans % b + b) % b;
+        ll gcd = exgcd(a, b, x, y), bg = b / gcd;
+        if(c % gcd) return -1;
+        x = Ksc(x, c/gcd, bg);
+        ans += x * M;
+        M *= bg;
+        ans = (ans % M + M) % M; 
+    }
+    return (ans % M + M) % M;
+}

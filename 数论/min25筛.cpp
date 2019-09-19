@@ -1,3 +1,8 @@
+const int maxn = 1e6 + 5;
+const int inf = 0x3f3f3f3f;
+const int Mod = 1e9 + 7;
+const double eps = 1e-8;
+typedef pair<int, int> psi;
 #define inv_2 (Mod+1)/2
 #define inv_6 (Mod+1)/6
 long long sqr, m, w[maxn], g[maxn], h[maxn];

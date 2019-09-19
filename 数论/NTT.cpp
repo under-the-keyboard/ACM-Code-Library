@@ -86,7 +86,6 @@ long long Ksm(long long a, long long p, long long mod) {
     return base % mod;
 } 
 namespace NTT{
-
     const long long P1 = 469762049, P2 = 998244353, P3 = 1004535809, g = 3; 
     const long long PP = 1ll * P1 * P2;
     long long n, m, p, len = 1, lim;

@@ -61,4 +61,4 @@ int main()
 /*
 gcd之和
 gcd(i,j)(1<=i<=n)(1<=j<=m)
-* /
+ * /

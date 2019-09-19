@@ -21,7 +21,7 @@ void Kruskal() {
     int sum = 0;
     int cnt = 0;
     for (int i = 0; i < m; ++i) {
-        if (cnt == n+1) break;
+        if (cnt == n-1) break;
         int fx = find(g[i].u);
         int fy = find(g[i].v);
         if (fx == fy) continue;

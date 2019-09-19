@@ -24,7 +24,7 @@ struct Palindrome_Tree{
         c -= 'a';
         S[++n] = c;
         int cur = get_fail(last);
-        if (!nex[cur][c]) {
+        if (!nex[cur][c]) { // 出现新的回文串
             int now = newnode(len[cur] + 2);
             fail[now] = nex[get_fail(fail[cur])][c];
             nex[cur][c] = now;

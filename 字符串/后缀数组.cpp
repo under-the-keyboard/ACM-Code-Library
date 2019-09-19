@@ -1,8 +1,8 @@
 struct SuffixArray{ // 下标1
     int cntA[maxn], cntB[maxn], A[maxn], B[maxn];
-    int Sa[maxn], tsa[maxn], height[maxn], Rank[maxn]; // Sa[i] 排名第i的下标， Rank[i] 下标i的排名
+    int Sa[maxn], tSa[maxn], height[maxn], Rank[maxn]; // Sa[i] 排名第i的下标， Rank[i] 下标i的排名
     int n, dp[maxn][21];
-    void init(char *buf, int len) { // 预处理，sa，rank，height
+    void init(char *buf, int len) { // 下标1，sa，rank，height
         n = len;
         for (int i = 0; i < 500; ++i) cntA[i] = 0;
         for (int i = 1; i <= n; ++i) cntA[(int)buf[i]]++;
@@ -21,9 +21,9 @@ struct SuffixArray{ // 下标1
                 cntB[ B[i] = (i + l <= n) ? Rank[i+l] : 0]++;
             }
             for (int i = 1; i <= n; ++i) cntB[i] += cntB[i-1];
-            for (int i = n; i >= 1; --i) tsa[ cntB[B[i]]-- ] = i;
+            for (int i = n; i >= 1; --i) tSa[ cntB[B[i]]-- ] = i;
             for (int i = 1; i <= n; ++i) cntA[i] += cntA[i-1];
-            for (int i = n; i >= 1; --i) Sa[ cntA[A[tsa[i]]]-- ] = tsa[i];
+            for (int i = n; i >= 1; --i) Sa[ cntA[A[tSa[i]]]-- ] = tSa[i];
             Rank[ Sa[1] ] = 1;
             for (int i = 2; i <= n; ++i) {
                 Rank[Sa[i]] = Rank[Sa[i-1]];

@@ -14,13 +14,7 @@ long long Ksm(long long a, long long b) {
     }
     return res;
 }
-void init(int n) {
-    memset(rnk, 0, sizeof(rnk));
-    int lim = 0;
-    while((1<<lim) < n) lim ++;
-    for (int i = 0; i < n; i ++) 
-        rnk[i] = (rnk[i>>1]>>1) | ((i&1) << (lim-1));
-}
+
 void ntt(long long *a, int op, int n) {
     for (int i = 0; i < n; i ++) 
         if(i < rnk[i]) swap(a[i], a[rnk[i]]);
@@ -39,6 +33,19 @@ void ntt(long long *a, int op, int n) {
         for (int i = 0, inv = Ksm(n, mod-2); i < n; i ++)
             a[i] = 1ll * a[i] * inv % mod;
 }
+
+void solve(ll *a, ll *b, int len) {
+    int n = 1, lim = 0;
+    while(n <= len + len) n <<= 1, lim++;
+    for (int i = 0; i < n; i ++)
+        rnk[i] = (rnk[i>>1]>>1) | ((i&1) << (lim-1));
+    ntt(a, 1, n); ntt(b, 1, n);
+    for (int i = 0; i < n; i ++)
+        a[i] = (1ll * a[i] * b[i]) % mod;
+    ntt(a, -1, n);
+} 
+
+
 char s1[maxn], s2[maxn];
 long long ans[maxn];
 int main() {
@@ -68,7 +75,8 @@ int main() {
     return 0;
 }
 //三模NTT
-#define long long long long 
+
+#define long long long
 const long long maxn = 3 * 1e6 + 10;
 #define swap(x,y) x ^= y, y ^= x, x ^= y
 using namespace std;

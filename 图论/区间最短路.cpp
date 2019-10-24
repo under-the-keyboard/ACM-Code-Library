@@ -68,4 +68,3 @@ void Dijkstra(int s, int n) {
 }
 build(1, 1, n, 0); // 入树
 build(1, 1, n, 1); // 出树
-

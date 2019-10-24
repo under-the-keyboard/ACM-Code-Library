@@ -31,6 +31,7 @@ struct Trie{
         while (!que.empty()) {
             int now = que.front();
             que.pop();
+	    // g[fail[now]].push_back(now); fail树
             for (int i = 0; i < 26; ++i) {
                 if (nex[now][i] == -1) nex[now][i] = nex[fail[now]][i];
                 else {

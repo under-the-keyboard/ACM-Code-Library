@@ -10,7 +10,7 @@ struct Trie{
         p = 0;
         root = newnode();
     }
-    void add(char *s) {
+    void add(char *s) { // 字符串下标0
         int now = root;
         for (int i = 0; s[i]; ++i) {
             if (nex[now][s[i] - 'a'] == 0) nex[now][s[i] - 'a'] = newnode();

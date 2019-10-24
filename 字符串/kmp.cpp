@@ -1,4 +1,8 @@
 struct KMP{ // 下标0
+    /*
+        最小循环节:L = (len - nex[len])
+	如果len % L == 0,表示S完全由循环节组成,周期T = len / L
+    */
     int nex[maxn];
     void get_nex(char *buf, int len) {
         nex[0] = -1;
@@ -19,5 +23,4 @@ struct KMP{ // 下标0
         }
         return cnt; // 匹配个数
     }
-    // (len - nex[len]) 最小循环节，前提len % (len - nex[len]) = 0
 }kmp;

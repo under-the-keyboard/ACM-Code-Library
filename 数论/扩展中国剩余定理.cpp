@@ -30,26 +30,12 @@ long long getInv(long long a, long long p) {
     x = (x % p + p) % p;
     return x;
 }
-long long exCrt() {
-    for (long long i = 2; i <= n; i ++) {
-        long long M1 = M[i - 1], M2 = M[i];
-        long long C1 = C[i - 1], C2 = C[i];
-        long long T = gcd(M1, M2);
-        long long t = (C2 - C1 % M2 + M2) % M2;
-        if(t % T) return -1;
-        M[i] = M1 / T * M2;
-        C[i] = mul(getInv(M1 / T, M2 / T), t / T, (M2 / T));
-        C[i] = C[i] * M1 + C1;
-        C[i] = (C[i] % M[i] + M[i]) % M[i];
-    }
-    return C[n];
-}
-ll exCrt(ll *c_, ll *m_, int n) {// a,m from 1~n
-    ll x, y, k;
-    ll M = m_[1], ans = c_[1];
+long long exCrt(long long *c_, long long *m_, int n) {// a,m from 1~n
+    long long x, y, k;
+    long long M = m_[1], ans = c_[1];
     for (int i = 2; i <= n; i ++) {
-        ll a = M, b = m_[i], c = (c_[i] - ans % b + b) % b;
-        ll gcd = exgcd(a, b, x, y), bg = b / gcd;
+        long long a = M, b = m_[i], c = (c_[i] - ans % b + b) % b;
+        long long gcd = exgcd(a, b, x, y), bg = b / gcd;
         if(c % gcd) return -1;
         x = Ksc(x, c/gcd, bg);
         ans += x * M;

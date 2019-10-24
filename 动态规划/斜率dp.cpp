@@ -2,6 +2,10 @@
 序列C_i，分为m段，每段权值(\sum C_i)^2+M
 求最小权值和
 */
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 long long dp[maxn], q[maxn];
 long long sum[maxn];
 long long head, tail, n, m;

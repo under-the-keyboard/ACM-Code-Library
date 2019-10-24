@@ -1,4 +1,5 @@
 long long Pre[maxn];
+
 long long extend_gcd(long long a, long long b, long long &x, long long &y) {
     if(!b) {
         x = 1; y = 0;
@@ -9,11 +10,13 @@ long long extend_gcd(long long a, long long b, long long &x, long long &y) {
     x = y; y = t - (a / b) * y;
     return d;
 }
+
 long long mul(long long a, long long b, long long P){
     long long L = a * (b >> 25LL) % P * (1LL << 25) % P;
     long long R = a * (b & ((1LL << 25) - 1)) % P;
     return (L + R) % P;
 }
+
 long long Pow(long long a, long long b, long long P) {
     long long ans = 1; a %= P;
     while(b) {
@@ -23,15 +26,18 @@ long long Pow(long long a, long long b, long long P) {
     }
     return ans;
 }
+
 long long getInv(long long a, long long p) {
     long long x, y;
     extend_gcd(a, p, x, y);
     x = (x % p + p) % p;
     return x;
 }
+
 long long CRT(long long m, long long p, long long P) {
     return mul(mul(m, (P / p), P), getInv(P / p, p), P);
 }
+
 void init(long long pi, long long pk) {
     Pre[0] = 1;
     for (int i = 1; i <= pk; i ++) {
@@ -39,12 +45,14 @@ void init(long long pi, long long pk) {
         if(i % pi) Pre[i] = mul(Pre[i], i, pk);
     }
 }
+
 long long Mul(long long n, long long pi, long long pk) {
     if(n <= 1) return 1;
     long long ans = Pow(Pre[pk], n / pk, pk);
     if(n % pk) ans = mul(ans, Pre[n % pk], pk);
     return mul(ans, Mul(n / pi, pi, pk), pk);
 }
+
 long long C(long long n, long long m, long long pi, long long pk) {
     if(n < m) return 0;
     init(pi, pk);
@@ -58,7 +66,13 @@ long long C(long long n, long long m, long long pi, long long pk) {
     long long ans = mul(mul(a, b, pk), c, pk);
     return mul(ans, Pow(pi, r, pk), pk);
 }
+<<<<<<< HEAD
 long long ex_lucas(long long n, long long m, long long P) {//C_n^m %p
+=======
+
+long long ex_lucas(long long n, long long m, long long P) {
+//C_n^m %p
+>>>>>>> dev
     long long ans = 0;
     long long p = P;
     for (int i = 2; i <= P; i ++) {

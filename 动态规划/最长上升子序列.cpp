@@ -1,5 +1,11 @@
 int dp[maxn][maxn][2], f[maxn][maxn];
+<<<<<<< HEAD
 int main() {
+=======
+
+int main()
+{
+>>>>>>> dev
     string aa, bb;
     cin >> aa >> bb;
     memset(dp, 0, sizeof(dp));
@@ -22,6 +28,11 @@ int main() {
     cout << dp[aa.size()][bb.size()][0] << endl;
     return 0;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dev
 //O(nlogn)
 b[1] = h[0];
 len = 1;
@@ -32,4 +43,10 @@ for (int i = 1; i < cnt; i ++) {
         b[pos] = h[i];
     }
 }
+<<<<<<< HEAD
 printf("%d\n", len);
+=======
+printf("%d\n", len);
+
+
+>>>>>>> dev

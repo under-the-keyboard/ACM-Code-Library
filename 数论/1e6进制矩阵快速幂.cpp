@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #define ll long long
 const int maxn = 1e6;
 const ll mod = 998244353;
@@ -7,16 +8,44 @@ struct Matrix{
     void init() {
         mat[0][0] = mat[1][1] = 1;
     } 
+=======
+#include<bits/stdc++.h>
+using namespace std;
+ 
+#define ll long long
+const int maxn = 1e6;
+const ll mod = 998244353;
+ 
+struct Matrix{
+    ll mat[2][2];
+ 
+    Matrix() {memset(mat, 0, sizeof(mat));};
+ 
+    void init() {
+        mat[0][0] = mat[1][1] = 1;
+    }
+ 
+>>>>>>> dev
     void init(ll a, ll b) {
         mat[0][0] = 0; mat[0][1] = b;
         mat[1][0] = 1; mat[1][1] = a;
     }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     void operator = (Matrix x) {
         for (int i = 0; i <= 1; i ++)
             for (int j = 0; j <= 1; j ++)
                 mat[i][j] = x.mat[i][j];
     }
+<<<<<<< HEAD
 };
+=======
+ 
+};
+ 
+>>>>>>> dev
 Matrix operator * (Matrix x, Matrix y) {
     Matrix t;
     for (int i = 0; i <= 1; i ++)
@@ -25,7 +54,13 @@ Matrix operator * (Matrix x, Matrix y) {
                 t.mat[i][j] = (t.mat[i][j] + x.mat[i][k] * y.mat[k][j]) % mod;
     return t;
 }
+<<<<<<< HEAD
 Matrix pre[4][2*maxn+10];
+=======
+
+Matrix pre[4][2*maxn+10];
+
+>>>>>>> dev
 ll Ksm(ll b) {
     Matrix t; t.init();
     int cnt = 0;
@@ -41,6 +76,10 @@ ll Ksm(ll b) {
     ans = ans * t;
     return ans.mat[0][0];
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 void init() {
     Matrix t; t.init(3, 2);
     pre[1][1] = t; pre[1][0].init();
@@ -50,6 +89,10 @@ void init() {
     pre[3][1] = pre[2][maxn]; pre[3][0].init();
     for (int i = 2; i <= 2* maxn; i ++) pre[3][i] = pre[3][i-1] * pre[3][1];
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 int main() {
     init();
     ll n, q;

@@ -1,8 +1,16 @@
 int dp[2][1<<5];
 int n, m, cur;
+<<<<<<< HEAD
 void updata(int a, int b) {
     if(b & (1<<m)) dp[cur][b^(1<<m)] = dp[cur][b^(1<<m)] + dp[1-cur][a];
 }
+=======
+
+void updata(int a, int b) {
+    if(b & (1<<m)) dp[cur][b^(1<<m)] = dp[cur][b^(1<<m)] + dp[1-cur][a];
+}
+
+>>>>>>> dev
 int main(int argc, char const *argv[]) {
     whhile(scanf("%d %d", &n, &m) != EOF && (n || m)) {
 	    if(m > n) swap(n, m);
@@ -23,4 +31,8 @@ int main(int argc, char const *argv[]) {
 	    printf("%d", dp[cur][(1<<m)-1]);
     }
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev

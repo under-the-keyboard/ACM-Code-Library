@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+#include<bits/stdc++.h>
+>>>>>>> dev
 #define ljc 167772161 /*原根是3*/ 
 #define int long long
 #define ll long long

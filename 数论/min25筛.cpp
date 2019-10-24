@@ -9,12 +9,15 @@ long long sqr, m, w[maxn], g[maxn], h[maxn];
 long long sumg[maxn], sumh[maxn], id1[maxn], id2[maxn];
 long long prim[maxn], tot;
 bool mark[maxn];
+
 long long Add(long long a, long long b) {
     return (a + b) % Mod;
 }
+
 long long Sup(long long a, long long b) {
     return (a - b + Mod) % Mod;
 }
+
 long long Pow(long long a, long long b) {
     long long res = 1;
     while(b) {
@@ -24,6 +27,7 @@ long long Pow(long long a, long long b) {
     }
     return res;
 }
+
 void init(long long n) {
     mark[1] = 1;
     for (long long i = 2; i <= n; i ++) {
@@ -39,6 +43,7 @@ void init(long long n) {
         }
     }
 }
+
 void GetW(long long n) {
     for (long long i = 1, j; i <= n; i = j + 1) {
         j = n / (n / i);
@@ -52,6 +57,7 @@ void GetW(long long n) {
         else id2[n/w[m]] = m;
     }
 }
+
 void GetG(long long n) {
     for (long long i = 1; i <= tot; i ++) {
         for (long long j = 1; j <= m && prim[i] * prim[i] <= w[j]; j ++) {
@@ -62,6 +68,7 @@ void GetG(long long n) {
         }
     }
 }
+
 long long S(long long x, long long y, long long n) {
     if(x <= prim[y-1] || x <= 1) return 0;
     long long id = x <= sqr ? id1[x] : id2[n/x];
@@ -75,6 +82,7 @@ long long S(long long x, long long y, long long n) {
     }
     return res % Mod;
 }
+
 int main(int argc, char *args[]) {
     long long n;
     scanf("%lld", &n);
@@ -85,3 +93,5 @@ int main(int argc, char *args[]) {
     printf("%lld\n", (S(n, 1, n) + 1) % Mod);
     return 0;
 }
+
+

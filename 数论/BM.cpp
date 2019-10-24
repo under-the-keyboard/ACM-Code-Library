@@ -4,6 +4,7 @@
 const long long mod = 998244353;
 #define sz(x) ((int)(x).size())
 typedef vector<long long> VI;
+
 long long Ksm(long long a, long long b) {
     long long res = 1; a %= mod;
     assert(b >= 0);
@@ -14,11 +15,17 @@ long long Ksm(long long a, long long b) {
     }
     return res;
 }
+
 int _, n;
 namespace Linear_Seq{
     const int N = 10010;
     long long res[N], base[N], _c[N], _md[N];
+<<<<<<< HEAD
     vector<int> Md;  
+=======
+    vector<int> Md;
+    
+>>>>>>> dev
     void Mul(long long *a, long long *b, int k) {
         for (int i = 0; i < k+k; i ++) _c[i] = 0;
         for (int i = 0; i < k; i ++)
@@ -30,6 +37,7 @@ namespace Linear_Seq{
         for (int i = 0; i < k; i ++)
             a[i] = _c[i];
     }
+
     int solve(long long n, VI a, VI b) {
         long long ans = 0, pnt = 0;
         int k = sz(a);
@@ -54,6 +62,7 @@ namespace Linear_Seq{
         if(ans < 0) ans += mod;
         return ans;
     }
+
     VI BM(VI s) {
         VI C(1, 1), B(1, 1);
         int L = 0, m = 1, b = 1;
@@ -77,6 +86,7 @@ namespace Linear_Seq{
         }
         return C;
     }
+
     int Gao(VI a, long long n) { //得到第n项
         VI c = BM(a);
         c.erase(c.begin());
@@ -85,6 +95,8 @@ namespace Linear_Seq{
     }
 };
 using namespace Linear_Seq;
+
+
 void solve() { //预处理前3k项
     long long n, k;
     scanf("%lld %lld", &n, &k);
@@ -108,15 +120,25 @@ void solve() { //预处理前3k项
     }
     printf("%lld\n", Gao(v, n));
 }
+
 int main() {
     solve();
     return 0;
 }
 //anothers
+<<<<<<< HEAD
 #define maxk 100005
 #define maxn 200005
 const int mod = 998244353;
+=======
+#include<bits/stdc++.h>
+#define maxk 100005
+#define maxn 200005
+const int mod = 998244353;
+ 
+>>>>>>> dev
 #define mul(x, y) static_cast<long long> (x) * (y) % mod
+
 namespace Math {
     inline int pw(int base, int p) {
         static int res; res = 1;
@@ -130,6 +152,7 @@ namespace Math {
     inline int inv(int x) { return pw(x, mod-2); }
 }
 inline void reduce(int &x) { x += x >> 31 & mod; }
+
 namespace Poly {
 #define N maxn
     int lim, s, rev[N], Wn[N];
@@ -159,6 +182,10 @@ namespace Poly {
             std::reverse(A + 1, A + lim);
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     void INV(int *A, int *B, int n) {  //多项式A求逆到B，[0,n-1]
         if (n == 1) { *B = Math::inv(*A); return ; }
         static int C[N], D[N];
@@ -171,6 +198,10 @@ namespace Poly {
         FFT(D, 0);
         std::memcpy(B + len, D + len, n - len << 2);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     int G[N], INVG[N];
     void DIV(int *A, int *Q, int n, int m) {
         static int C[N];
@@ -189,6 +220,10 @@ namespace Poly {
         FFT(R, 0);
         for (int i = 0; i < m; ++i) reduce(R[i] = A[i] - R[i]);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     void POW(int *A, int p, int m) {
         if (!p) return ;
         POW(A, p >> 1, m);
@@ -203,6 +238,10 @@ namespace Poly {
         }
         DIV_MOD(T, A, 2 * m, m + 1);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     int solve(int *f, int *a, int n, int k) { //a为递推式0~k-1项，f为转移数组1~k项
         static int A[maxn], B[maxn];
         for (int i = 1; i <= k; ++i) reduce(G[k - i] = -f[i]);
@@ -217,6 +256,7 @@ namespace Poly {
     }
 #undef N
 }
+ 
 int n, k;
 int f[maxk], a[maxk];
 int main() {
@@ -230,7 +270,13 @@ int main() {
     // for (int i = 0; i < n; i ++) 
     //     printf("%d ", f[i]);
     // printf("\n");
+<<<<<<< HEAD
     // a(n)=f(i)*a(n-i) {1<=i<=k}
+=======
+    
+    // a(n)=f(i)*a(n-i) {1<=i<=k}
+     
+>>>>>>> dev
 	std::ios::sync_with_stdio(false), std::cin.tie(0), std::cout.tie(0);
 	std::cin >> n >> k;
 	for (int i = 1; i <= k; ++i) std::cin >> f[i];
@@ -239,6 +285,10 @@ int main() {
         // std::cout << "n: " << n << " ";
 	    std::cout << Poly::solve(f, a, n, k) << '\n';
     // }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> dev
 	return 0;
 }
 //////////////////////////////////////////////////////////
@@ -249,6 +299,10 @@ public:
     static const int N = 50010;///多项式系数最大值
     int64_t res[N],base[N],c[N],md[N],COEF[N]/**COEF是多项式系数*/,Mod;
     vector<int> Md;
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     inline static int64_t gcdEx(int64_t a, int64_t b, int64_t&x, int64_t& y)
     {
         if(!b) {x=1;y=0;return a;}
@@ -256,10 +310,18 @@ public:
         y -= (a/b)*x;
         return d;
     }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     static int64_t Inv(int64_t a, int64_t Mod) {
         int64_t x, y;
         return gcdEx(a, Mod, x, y)==1?(x%Mod+Mod)%Mod:-1;
     };
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     inline void mul(int64_t *a,int64_t *b,int k) {
         fill(c,c+2*k,0) ;
         for(int i(0);i<k;++i)if(a[i])for(int j(0);j<k;++j)
@@ -290,6 +352,10 @@ public:
         for(int i(0);i<k;++i) ans=(ans+res[i]*b[i])%Mod;
         return ans+(ans<0?Mod:0);
     }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     ///1-st***********模数是质数用这里*******************/
     VI BM(VI s) {
         VI C(1,1),B(1,1);
@@ -322,6 +388,10 @@ public:
         return C;
     }
     ///1-ed*************模数是质数用这里*******************/
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     ///2-st*************模数非质数用这里*******************/
     inline static void extand(VI &a, size_t d, int64_t value = 0) {
         if (d <= a.size()) return; a.resize(d, value);
@@ -337,6 +407,10 @@ public:
         }
         return (ans + M) % M;
     }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     static VI ReedsSloane(const VI &s, int64_t Mod) {
         auto L = [](const VI &a, const VI &b) {
             int da = (a.size()>1||(a.size()== 1&&a[0]))?a.size()-1:-1000;
@@ -425,6 +499,10 @@ public:
         return a;
     }
     ///2-ed***********模数非质数用这里*******************/
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
     int64_t solve(VI a,int64_t n,int64_t Mod,bool prime=true) {
         VI c; this->Mod = Mod ;
         if(prime) c = BM(a);///如果已经知道系数了,直接输入到c就行了,不用调用BM().
@@ -442,10 +520,18 @@ public:
 //      init[m] = sum_{i=0}^{m-1} init[i] * trans[i]
 struct LinearRecurrence {
   using vec = vector<ll>;
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
   static void extand(vec &a, ll d, ll value = 0) {
     if (d <= a.size()) return;
     a.resize(d, value);
   }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
   static vec BerlekampMassey(const vec &s, ll mod) {
     std::function<ll(ll)> inverse = [&](ll a) {
       return a == 1 ? 1 : (ll)(mod - mod / a) * inverse(mod % a) % mod;
@@ -478,6 +564,10 @@ struct LinearRecurrence {
     }
     return A;
   }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
   static void exgcd(ll a, ll b, ll &g, ll &x, ll &y) {
       if (!b) x = 1, y = 0, g = a;
       else {
@@ -511,6 +601,10 @@ struct LinearRecurrence {
           // linear feedback shift register mod p^e, p is prime
           vector<vec> a(e), b(e), an(e), bn(e), ao(e), bo(e);
           vec t(e), u(e), r(e), to(e, 1), uo(e), pw(e + 1);;
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
           pw[0] = 1;
           for (ll i = pw[0] = 1; i <= e; ++i) pw[i] = pw[i - 1] * p;
           for (ll i = 0; i < e; ++i) {
@@ -568,6 +662,10 @@ struct LinearRecurrence {
           }
           return make_pair(an[0], bn[0]);
       };
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
       vector<tuple<ll, ll, ll>> fac;
       for (ll i = 2; i * i <= mod; ++i) if (mod % i == 0) {
               ll cnt = 0, pw = 1;
@@ -588,6 +686,10 @@ struct LinearRecurrence {
           n = max(n, (ll) a.size());
       }
       vec a(n), c(as.size()), m(as.size());
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
       for (ll i = 0; i < n; ++i) {
           for (ll j = 0; j < as.size(); ++j) {
               m[j] = get<0>(fac[j]);
@@ -597,8 +699,15 @@ struct LinearRecurrence {
       }
       return a;
   }
+<<<<<<< HEAD
   LinearRecurrence(const vec &s, const vec &c, ll mod):
       init(s), trans(c), mod(mod), m(s.size()) {}
+=======
+ 
+  LinearRecurrence(const vec &s, const vec &c, ll mod):
+      init(s), trans(c), mod(mod), m(s.size()) {}
+ 
+>>>>>>> dev
   LinearRecurrence(const vec &s, ll mod, bool is_prime = true): mod(mod) {
       vec A;
       if(is_prime) A = BerlekampMassey(s,mod);
@@ -612,10 +721,18 @@ struct LinearRecurrence {
       reverse(trans.begin(), trans.end());
       init = {s.begin(), s.begin() + m};
   }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
   ll calc(ll n) {
       if (mod == 1) return 0;
       if (n < m) return init[n];
       vec v(m), u(m << 1);
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
       ll msk = !!n;
       for (ll m = n; m > 1; m >>= 1LL) msk <<= 1LL;
       v[0] = 1 % mod;
@@ -643,17 +760,31 @@ struct LinearRecurrence {
       }
       return ret;
   }
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> dev
   vec init, trans;
   ll mod;
   ll m;
 };
 ll mod = 9882443533;
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 ll Recever(ll a) {
 	a %= mod;
 	if(a < mod) a += mod;
 	return a;
 }
+<<<<<<< HEAD
 vector<ll> a, f;
+=======
+
+vector<ll> a, f;
+
+>>>>>>> dev
 int main() {
 	int n, m;
 	scanf("%d %d", &n, &m);

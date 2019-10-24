@@ -13,6 +13,10 @@ long long dfs(long long pos, long long m, long long status, bool limit) {
     }
     return limit ? sum : dp[pos][m][status] = sum;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 long long solve(long long n) {
     num[0] = 0;
     memset(dp, 0, sizeof(dp));
@@ -21,4 +25,8 @@ long long solve(long long n) {
         n /= 10;
     }
     return dfs(num[0], 0, 0, 1);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev

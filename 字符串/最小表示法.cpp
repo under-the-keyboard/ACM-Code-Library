@@ -1,4 +1,4 @@
-int minRepresent(char *s, int len) {
+int minRepresent(char *s, int len) { // 下标0
     int i = 0, j = 1, k = 0;
     while (i < len && j < len && k < len) {
         int t = s[(i+k) % len] - s[(j+k) % len];

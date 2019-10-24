@@ -6,7 +6,7 @@ struct Topsort{ // 下标1
     void init () {
         fill(in, in+n+1, 0);
         for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j < (int)g[i].size(); ++j) {
+            for (int j = 0; j < (int)g[i].size(); ++j) { 
                 in[g[i][j]]++;
             }
         }

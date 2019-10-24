@@ -1,4 +1,4 @@
-struct Manacher{
+struct Manacher{ // 下标0
     int RL[maxn << 1];
     char s[maxn], t[maxn << 1];
     int getlen(char *s) {
@@ -26,6 +26,6 @@ struct Manacher{
             }
             MaxLen = max(MaxLen, RL[i]);
         }
-        return MaxLen - 1;
+        return MaxLen - 1; 
     }
 }manacher;

@@ -1,5 +1,7 @@
 struct exKMP{
-    // 字符串下标从0开始
+    /* 字符串下标从0开始
+       解决S的所有后缀与T的最长公共前缀	
+    */
     int nex[maxn], ex[maxn]; //模式串nex，匹配串ex
     void get_nex(char *str, int len) {
         int i = 0, j, pos;
@@ -18,7 +20,7 @@ struct exKMP{
             }
         }
     }
-    void get_ex(char *s1, char *s2) { // s1匹配s2
+    void get_ex(char *s1, char *s2) { // s1的后缀匹配s2前缀
         int i = 0, j, pos;
         int len1 = strlen(s1);
         int len2 = strlen(s2);
